@@ -1,6 +1,7 @@
 package com.music.maowo.fragment;
 
 import android.os.Bundle;
+import android.sax.RootElement;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,8 +43,8 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
     ListView lv_content;
 
     private View header;
-    private ImageView iv_sort;
-    private ImageView iv_article;
+    private RelativeLayout rl_sort;
+    private RelativeLayout rl_article;
 
     private List<String> images;
     private HomeFragmentAdapter adapter;
@@ -54,10 +55,10 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
         ButterKnife.bind(this, view);
 
         header = inflater.inflate(R.layout.fragment_home_sort_and_article_layout, null);
-        iv_sort = header.findViewById(R.id.iv_sort);
-        iv_article = header.findViewById(R.id.iv_artical);
-        iv_sort.setOnClickListener(this);
-        iv_article.setOnClickListener(this);
+        rl_sort = header.findViewById(R.id.rl_sort);
+        rl_article = header.findViewById(R.id.rl_article);
+        rl_sort.setOnClickListener(this);
+        rl_article.setOnClickListener(this);
         init();
         return view;
     }
@@ -72,8 +73,7 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
         banner.setOnBannerListener(this);
         // TODO 从服务端获取数据
         banner.setImages(images).setImageLoader(new GlideLoader()).start();
-        Glide.with(getContext()).load(images.get(0)).into(iv_sort);
-        Glide.with(getContext()).load(images.get(1)).into(iv_article);
+
 
         List<String> list = new ArrayList<>();
         list.add("你好1");
@@ -112,10 +112,10 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
 
     @Override
     public void onClick(View view) {
-        if (view == iv_sort) {
-            Toast.makeText(getContext(), "iv_sort", Toast.LENGTH_LONG).show();
-        } else if (view == iv_article) {
-            Toast.makeText(getContext(), "iv_article", Toast.LENGTH_LONG).show();
+        if (view == rl_sort) {
+            Toast.makeText(getContext(), "rl_sort", Toast.LENGTH_LONG).show();
+        } else if (view == rl_article) {
+            Toast.makeText(getContext(), "rl_article", Toast.LENGTH_LONG).show();
         }
     }
 }
