@@ -5,16 +5,8 @@
     android:layout_height="match_parent"
     android:clipChildren="true"
     android:fitsSystemWindows="true" >
-
-    <com.youth.banner.Banner
-        android:id="@+id/banner"
-        android:layout_width="match_parent"
-        android:layout_height="190dp"
-        app:indicator_drawable_selected="@color/c_FF10BBE6"/>
-
     <ListView
         android:id="@+id/lv_content"
-        android:layout_below="@id/banner"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

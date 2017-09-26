@@ -1,11 +1,17 @@
 package com.music.maowo.adapter;
 
 import android.content.Context;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.music.maowo.R;
+import com.music.maowo.bean.TopicSummaryInfo;
 
 import java.util.List;
 
@@ -14,10 +20,10 @@ import java.util.List;
  */
 
 public class HomeFragmentAdapter extends BaseAdapter {
-    private List<String> list;
+    private List<TopicSummaryInfo> list;
     private Context context;
 
-    public HomeFragmentAdapter(List<String> list, Context context) {
+    public HomeFragmentAdapter(List<TopicSummaryInfo> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -28,7 +34,7 @@ public class HomeFragmentAdapter extends BaseAdapter {
     }
 
     @Override
-    public String getItem(int i) {
+    public TopicSummaryInfo getItem(int i) {
         return list.get(i);
     }
 
@@ -38,12 +44,30 @@ public class HomeFragmentAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        TextView tv = new TextView(context);
-        AbsListView.LayoutParams params = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);
-        tv.setLayoutParams(params);
-        tv.setText(list.get(i));
-        tv.setTextColor(0xFF666666);
-        return tv;
+    public View getView(int i, View convertView, ViewGroup viewGroup) {
+        ViewHolder holder;
+        if (null == convertView) {
+            convertView = View.inflate(context, R.layout.fragment_home_gridview_item, null);
+            holder = new ViewHolder();
+            holder.iv_show = convertView.findViewById(R.id.iv_show);
+            holder.tv_title = convertView.findViewById(R.id.tv_title);
+            holder.tv_description = convertView.findViewById(R.id.tv_description);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+        TopicSummaryInfo info = list.get(i);
+        Glide.with(context).load(info.imgUrl).into(holder.iv_show);
+        holder.tv_title.setText(info.title);
+        holder.tv_description.setText(info.description);
+        holder.info = info;
+        return convertView;
+    }
+
+    public static class ViewHolder {
+        public ImageView iv_show;
+        public TextView tv_title;
+        public TextView tv_description;
+        public TopicSummaryInfo info;
     }
 }

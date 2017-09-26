@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.music.maowo.Constants;
 import com.music.maowo.R;
 import com.music.maowo.adapter.HomeFragmentAdapter;
+import com.music.maowo.bean.TopicSummaryInfo;
 import com.music.maowo.net.BaseResult;
 import com.music.maowo.net.LoginAndRegisterResponse;
 import com.music.maowo.net.ObserverWapper;
@@ -37,12 +38,11 @@ import rx.schedulers.Schedulers;
  * Created by Jay on 2015/8/28 0028.
  */
 public class HomeFragment extends Fragment implements OnBannerListener, View.OnClickListener {
-    @BindView(R.id.banner)
-    Banner banner;
     @BindView(R.id.lv_content)
     ListView lv_content;
 
     private View header;
+    private Banner banner;
     private RelativeLayout rl_sort;
     private RelativeLayout rl_article;
 
@@ -55,6 +55,7 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
         ButterKnife.bind(this, view);
 
         header = inflater.inflate(R.layout.fragment_home_sort_and_article_layout, null);
+        banner = header.findViewById(R.id.banner);
         rl_sort = header.findViewById(R.id.rl_sort);
         rl_article = header.findViewById(R.id.rl_article);
         rl_sort.setOnClickListener(this);
@@ -75,23 +76,12 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
         banner.setImages(images).setImageLoader(new GlideLoader()).start();
 
 
-        List<String> list = new ArrayList<>();
-        list.add("你好1");
-        list.add("你好2");
-        list.add("你好3");
-        list.add("你好4");
-        list.add("你好1");
-        list.add("你好2");
-        list.add("你好3");
-        list.add("你好4");
-        list.add("你好1");
-        list.add("你好2");
-        list.add("你好3");
-        list.add("你好4");
-        list.add("你好1");
-        list.add("你好2");
-        list.add("你好3");
-        list.add("你好4");
+        List<TopicSummaryInfo> list = new ArrayList<>();
+        list.add(new TopicSummaryInfo("nusicUrl", images.get(0), "title1", "description1"));
+        list.add(new TopicSummaryInfo("nusicUrl", images.get(1), "title2", "description2"));
+        list.add(new TopicSummaryInfo("nusicUrl", images.get(2), "title3", "description3"));
+        list.add(new TopicSummaryInfo("nusicUrl", images.get(3), "title4", "description4"));
+        list.add(new TopicSummaryInfo("nusicUrl", images.get(4), "title5", "description5"));
         adapter = new HomeFragmentAdapter(list, getContext());
         lv_content.setAdapter(adapter);
     }

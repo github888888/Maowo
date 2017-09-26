@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        app:indicator_drawable_selected="@color/c_FF10BBE6"/>
+
     <View
         android:id="@+id/v_horizontal_1"
+        android:layout_below="@id/banner"
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/c_FFDDDDDD"/>
+        android:background="@color/c_FFF5F5F5"/>
 
     <View
         android:id="@+id/v_horizontal_2"
@@ -21,7 +29,7 @@
         android:layout_below="@id/v_horizontal_2"
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/c_FFDDDDDD"/>
+        android:background="@color/c_FFF5F5F5"/>
     <View
         android:id="@+id/v_vertical"
         android:layout_below="@id/v_horizontal_1"
@@ -42,6 +50,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:drawableLeft="@mipmap/home_fragment_sort_icon"
+            android:drawablePadding="10dp"
             android:gravity="center"
             android:textColor="@color/c_FF222222"
             android:text="热门排行榜" />
@@ -58,6 +68,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:drawableLeft="@mipmap/home_fragment_article_icon"
+            android:drawablePadding="10dp"
             android:gravity="center"
             android:textColor="@color/c_FF222222"
             android:text="最新文章"/>
@@ -76,6 +88,7 @@
         android:background="#FFFFFFFF"
         android:gravity="center_vertical"
         android:drawableLeft="@drawable/home_fragment_left_indicator_shape"
+        android:drawableRight="@mipmap/home_fragment_right_gray_arrow"
         android:drawablePadding="10dp"
         android:textSize="15sp"
         android:textColor="#FF333333"
