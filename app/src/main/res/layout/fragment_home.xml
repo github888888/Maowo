@@ -1,13 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipChildren="true"
-    android:fitsSystemWindows="true" >
-    <ListView
-        android:id="@+id/lv_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    android:fitsSystemWindows="true">
 
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <include
+            android:id="@+id/rl_header_layout"
+            layout="@layout/fragment_home_sort_and_article_layout"/>
+
+        <com.music.maowo.view.CustomGridView
+            android:id="@+id/gv_content"
+            android:layout_below="@id/rl_header_layout"
+            android:scrollbars="none"
+            android:overScrollMode="never"
+            android:background="@color/c_FFF5F5F5"
+            android:listSelector="@color/c_FFFFFFFF"
+            android:numColumns="2"
+            android:horizontalSpacing="10dp"
+            android:verticalSpacing="10dp"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+</ScrollView>

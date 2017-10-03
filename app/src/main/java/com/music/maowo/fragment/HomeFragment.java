@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -21,6 +22,7 @@ import com.music.maowo.net.LoginAndRegisterResponse;
 import com.music.maowo.net.ObserverWapper;
 import com.music.maowo.net.RetrofitManager;
 import com.music.maowo.other.GlideLoader;
+import com.music.maowo.view.CustomGridView;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
@@ -38,13 +40,14 @@ import rx.schedulers.Schedulers;
  * Created by Jay on 2015/8/28 0028.
  */
 public class HomeFragment extends Fragment implements OnBannerListener, View.OnClickListener {
-    @BindView(R.id.lv_content)
-    ListView lv_content;
-
-    private View header;
-    private Banner banner;
-    private RelativeLayout rl_sort;
-    private RelativeLayout rl_article;
+    @BindView(R.id.gv_content)
+    CustomGridView gv_content;
+    @BindView(R.id.banner)
+    Banner banner;
+    @BindView(R.id.rl_sort)
+    RelativeLayout rl_sort;
+    @BindView(R.id.rl_article)
+    RelativeLayout rl_article;
 
     private List<String> images;
     private HomeFragmentAdapter adapter;
@@ -53,13 +56,6 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
-
-        header = inflater.inflate(R.layout.fragment_home_sort_and_article_layout, null);
-        banner = header.findViewById(R.id.banner);
-        rl_sort = header.findViewById(R.id.rl_sort);
-        rl_article = header.findViewById(R.id.rl_article);
-        rl_sort.setOnClickListener(this);
-        rl_article.setOnClickListener(this);
         init();
         return view;
     }
@@ -68,7 +64,8 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(Constants.screenWidth, Constants.screenWidth / 2);
         banner.setLayoutParams(params);
 
-        lv_content.addHeaderView(header);
+        rl_sort.setOnClickListener(this);
+        rl_article.setOnClickListener(this);
 
         images = Arrays.asList(getResources().getStringArray(R.array.urls));
         banner.setOnBannerListener(this);
@@ -83,7 +80,7 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
         list.add(new TopicSummaryInfo("nusicUrl", images.get(3), "title4", "description4"));
         list.add(new TopicSummaryInfo("nusicUrl", images.get(4), "title5", "description5"));
         adapter = new HomeFragmentAdapter(list, getContext());
-        lv_content.setAdapter(adapter);
+        gv_content.setAdapter(adapter);
     }
 
     @Override
