@@ -32,15 +32,6 @@
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/tv_mainactivity_night"
-            android:text="夜话"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="60dp"
-            android:gravity="center_horizontal"
-            android:textSize="15sp" />
-
-        <TextView
             android:id="@+id/tv_mainactivity_mine"
             android:text="我的"
             android:layout_width="0dp"

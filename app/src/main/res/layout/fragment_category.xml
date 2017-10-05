@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipChildren="true"
-    android:fitsSystemWindows="true" >
+    android:fitsSystemWindows="true">
 
-    <com.youth.banner.Banner
-        android:id="@+id/banner"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="match_parent" >
 
-    <ListView
-        android:id="@+id/lv_content"
-        android:layout_below="@id/banner"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <include
+            android:id="@+id/rl_header_layout"
+            layout="@layout/fragment_category_banner_layout"/>
 
-</RelativeLayout>
+        <com.music.maowo.view.CustomListView
+            android:id="@+id/lv_content"
+            android:layout_below="@id/rl_header_layout"
+            android:scrollbars="none"
+            android:overScrollMode="never"
+            android:background="@color/c_FFF5F5F5"
+            android:listSelector="@color/c_FFFFFFFF"
+            android:dividerHeight="10dp"
+            android:divider="@color/c_FFDDDDDD"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+</ScrollView>

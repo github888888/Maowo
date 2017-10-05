@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/c_FFFFFFFF">
+
+    <ImageView
+        android:id="@+id/iv_show"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/home_fragment_music_logo" />
+    
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_below="@id/iv_show"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:text="我的标题"
+        android:textColor="@color/c_FF333333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_reply_count"
+        android:layout_below="@id/iv_show"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:text="3"
+        android:textColor="@color/c_FF333333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_praise_count"
+        android:layout_below="@id/iv_show"
+        android:layout_toLeftOf="@id/tv_reply_count"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:text="2"
+        android:textColor="@color/c_FF333333"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_below="@id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="5dp"
+        android:includeFontPadding="false"
+        android:text="我的文案我是文案"
+        android:textColor="@color/c_FF999999"
+        android:textSize="12sp" />
+</RelativeLayout>

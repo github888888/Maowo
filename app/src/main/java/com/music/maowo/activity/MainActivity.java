@@ -17,8 +17,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     TextView tv_mainactivity_home;
     @BindView(R.id.tv_mainactivity_category)
     TextView tv_mainactivity_category;
-    @BindView(R.id.tv_mainactivity_night)
-    TextView tv_mainactivity_night;
     @BindView(R.id.tv_mainactivity_mine)
     TextView tv_mainactivity_mine;
     @BindView(R.id.vp_mainactivity_content)
@@ -34,16 +32,13 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         vp_mainactivity_content.addOnPageChangeListener(this);
     }
 
-    @OnClick({R.id.tv_mainactivity_home, R.id.tv_mainactivity_category,
-            R.id.tv_mainactivity_night, R.id.tv_mainactivity_mine})
+    @OnClick({R.id.tv_mainactivity_home, R.id.tv_mainactivity_category,  R.id.tv_mainactivity_mine})
     public void onClick(View view) {
         if (view == tv_mainactivity_home) {
             vp_mainactivity_content.setCurrentItem(0);
         } else if (view == tv_mainactivity_category) {
             vp_mainactivity_content.setCurrentItem(1);
-        } else if (view == tv_mainactivity_night) {
-            vp_mainactivity_content.setCurrentItem(2);
-        } else if (view == tv_mainactivity_mine) {
+        }  else if (view == tv_mainactivity_mine) {
             vp_mainactivity_content.setCurrentItem(3);
         }
     }
@@ -71,12 +66,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                     break;
                 case 2:
                     resetAllNoSelected();
-                    tv_mainactivity_night.setSelected(true);
-                    break;
-                case 3:
-                    resetAllNoSelected();
                     tv_mainactivity_mine.setSelected(true);
                     break;
+
             }
         }
     }
@@ -84,7 +76,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private void resetAllNoSelected() {
         tv_mainactivity_home.setSelected(false);
         tv_mainactivity_category.setSelected(false);
-        tv_mainactivity_night.setSelected(false);
         tv_mainactivity_mine.setSelected(false);
     }
 }
