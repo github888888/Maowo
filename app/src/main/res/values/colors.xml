@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="c_FFFFFFFF">#FFFFFFFF</color>
+    <color name="c_B3FFFFFF">#B3FFFFFF</color>
     <color name="c_FF333333">#FF333333</color>
     <color name="c_FF999999">#FF999999</color>
     <color name="c_FF10BBE6">#FF10BBE6</color>
@@ -12,4 +13,7 @@
     <color name="c_FFCCCCCC">#FFCCCCCC</color>
     <color name="c_FF222222">#FF222222</color>
     <color name="c_FFF5F5F5">#FFF5F5F5</color>
+    <color name="c_FF0FBIDA">#FF0FB1DA</color>
+    <color name="c_FF53BFDA">#FF53BFDA</color>
+    <color name="c_FFE8E8E8">#FFE8E8E8</color>
 </resources>

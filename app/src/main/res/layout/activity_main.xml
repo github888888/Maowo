@@ -19,6 +19,9 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="60dp"
+            android:paddingTop="10dp"
+            android:drawableTop="@drawable/mainactivity_tab_home_selector"
+            android:textColor="@drawable/mainactivity_tab_textcolor_selector"
             android:gravity="center_horizontal"
             android:textSize="15sp" />
 
@@ -28,6 +31,9 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="60dp"
+            android:paddingTop="10dp"
+            android:drawableTop="@drawable/mainactivity_tab_category_selector"
+            android:textColor="@drawable/mainactivity_tab_textcolor_selector"
             android:gravity="center_horizontal"
             android:textSize="15sp" />
 
@@ -37,6 +43,9 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="60dp"
+            android:paddingTop="10dp"
+            android:drawableTop="@drawable/mainactivity_tab_mine_selector"
+            android:textColor="@drawable/mainactivity_tab_textcolor_selector"
             android:gravity="center_horizontal"
             android:textSize="15sp" />
     </LinearLayout>

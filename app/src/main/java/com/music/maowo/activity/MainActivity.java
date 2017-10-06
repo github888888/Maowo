@@ -30,6 +30,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         vp_mainactivity_content.setAdapter(mAdapter);
         vp_mainactivity_content.setCurrentItem(0);
         vp_mainactivity_content.addOnPageChangeListener(this);
+        tv_mainactivity_home.setSelected(true);
     }
 
     @OnClick({R.id.tv_mainactivity_home, R.id.tv_mainactivity_category,  R.id.tv_mainactivity_mine})
