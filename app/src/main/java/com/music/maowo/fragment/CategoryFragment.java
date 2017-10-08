@@ -65,11 +65,11 @@ public class CategoryFragment extends Fragment implements OnBannerListener {
         banner.setImages(images).setImageLoader(new GlideLoader()).start();
 
         List<TopicSummaryInfo> list = new ArrayList<>();
-        list.add(new TopicSummaryInfo("nusicUrl", images.get(0), "title1", "description1", 1, 2));
-        list.add(new TopicSummaryInfo("nusicUrl", images.get(1), "title2", "description2", 2, 4));
-        list.add(new TopicSummaryInfo("nusicUrl", images.get(2), "title3", "description3", 3, 6));
-        list.add(new TopicSummaryInfo("nusicUrl", images.get(3), "title4", "description4", 4, 8));
-        list.add(new TopicSummaryInfo("nusicUrl", images.get(4), "title5", "description5", 5, 10));
+        list.add(new TopicSummaryInfo("nusicUrl", images.get(0), "title1", "description1", 1, 2, true));
+        list.add(new TopicSummaryInfo("nusicUrl", images.get(1), "title2", "description2", 2, 4, false));
+        list.add(new TopicSummaryInfo("nusicUrl", images.get(2), "title3", "description3", 3, 6, false));
+        list.add(new TopicSummaryInfo("nusicUrl", images.get(3), "title4", "description4", 4, 8, true));
+        list.add(new TopicSummaryInfo("nusicUrl", images.get(4), "title5", "description5", 5, 10, false));
         adapter = new CategoryFragmentAdapter(list, getContext());
         lv_content.setAdapter(adapter);
     }

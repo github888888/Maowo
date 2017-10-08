@@ -1,5 +1,6 @@
 package com.music.maowo.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.sax.RootElement;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.music.maowo.Constants;
 import com.music.maowo.R;
+import com.music.maowo.activity.HotAndNewArticleActivity;
 import com.music.maowo.adapter.HomeFragmentAdapter;
 import com.music.maowo.bean.TopicSummaryInfo;
 import com.music.maowo.net.BaseResult;
@@ -100,9 +102,13 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
     @Override
     public void onClick(View view) {
         if (view == rl_sort) {
-            Toast.makeText(getContext(), "rl_sort", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getActivity(), HotAndNewArticleActivity.class);
+            intent.putExtra(HotAndNewArticleActivity.TYPE_SELECTED, HotAndNewArticleActivity.TYPE_NEW);
+            startActivity(intent);
         } else if (view == rl_article) {
-            Toast.makeText(getContext(), "rl_article", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getActivity(), HotAndNewArticleActivity.class);
+            intent.putExtra(HotAndNewArticleActivity.TYPE_SELECTED, HotAndNewArticleActivity.TYPE_HOT);
+            startActivity(intent);
         }
     }
 }

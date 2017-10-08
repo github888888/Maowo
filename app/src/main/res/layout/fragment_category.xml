@@ -23,7 +23,7 @@
             android:background="@color/c_FFF5F5F5"
             android:listSelector="@color/c_FFFFFFFF"
             android:dividerHeight="10dp"
-            android:divider="@color/c_FFDDDDDD"
+            android:divider="@color/c_FFF5F5F5"
             android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

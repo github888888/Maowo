@@ -1,6 +1,7 @@
 package com.music.maowo.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -8,8 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.music.maowo.R;
 import com.music.maowo.bean.TopicSummaryInfo;
+import com.music.maowo.view.CircleImageView;
 
 import java.util.List;
 
@@ -17,11 +21,11 @@ import java.util.List;
  * Created by Administrator on 2017-9-24 0024.
  */
 
-public class CategoryFragmentAdapter extends BaseAdapter {
+public class HotAndNewArticelAdapter extends BaseAdapter {
     private List<TopicSummaryInfo> list;
     private Context context;
 
-    public CategoryFragmentAdapter(List<TopicSummaryInfo> list, Context context) {
+    public HotAndNewArticelAdapter(List<TopicSummaryInfo> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -42,16 +46,18 @@ public class CategoryFragmentAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View convertView, ViewGroup viewGroup) {
-        ViewHolder holder;
+    public View getView(final int i, View convertView, ViewGroup viewGroup) {
+        final ViewHolder holder;
         if (null == convertView) {
-            convertView = View.inflate(context, R.layout.fragment_category_listview_item, null);
+            convertView = View.inflate(context, R.layout.hot_and_new_article_listview_item, null);
             holder = new ViewHolder();
             holder.iv_show = convertView.findViewById(R.id.iv_show);
+            holder.tv_article_type = convertView.findViewById(R.id.tv_article_type);
             holder.tv_title = convertView.findViewById(R.id.tv_title);
             holder.tv_reply_count = convertView.findViewById(R.id.tv_reply_count);
             holder.tv_praise_count = convertView.findViewById(R.id.tv_praise_count);
-            holder.tv_description = convertView.findViewById(R.id.tv_description);
+            holder.civ_header = convertView.findViewById(R.id.civ_header);
+            holder.tv_author = convertView.findViewById(R.id.tv_author);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -62,17 +68,30 @@ public class CategoryFragmentAdapter extends BaseAdapter {
         holder.tv_reply_count.setText("" + info.reply_count);
         holder.tv_praise_count.setText("" + info.praise_count);
         holder.tv_praise_count.setSelected(info.isPraiseByMe);
-        holder.tv_description.setText(info.description);
+        holder.civ_header.setTag(info.authorHeaderUrl);
+        Glide.with(context).load(info.authorHeaderUrl)
+                .asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                String url = (String) holder.civ_header.getTag();
+                TopicSummaryInfo temp = list.get(i);
+                if (!temp.authorHeaderUrl.equals(url)) return;
+                holder.civ_header.setImageBitmap(resource);
+            }
+        });
+        holder.tv_author.setText(info.author);
         holder.info = info;
         return convertView;
     }
 
     public static class ViewHolder {
         public ImageView iv_show;
+        public TextView tv_article_type;
         public TextView tv_title;
         public TextView tv_reply_count;
         public TextView tv_praise_count;
-        public TextView tv_description;
+        public CircleImageView civ_header;
+        public TextView tv_author;
         public TopicSummaryInfo info;
     }
 }
