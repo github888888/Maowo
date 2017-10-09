@@ -32,7 +32,7 @@ public abstract class BaseActivity extends FragmentActivity {
         initDataAndListener();
         // 透明状态栏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            dealStatusBar();
+//            dealStatusBar();
         }
     }
 

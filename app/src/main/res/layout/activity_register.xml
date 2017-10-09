@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp">
+
+        <EditText
+            android:id="@+id/mobile_ext"
+            android:layout_above="@+id/footerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:drawableLeft="@mipmap/mobile_img"
+            android:drawablePadding="5dp"
+            android:background="@null"
+            android:maxLength="11"
+            android:hint="输入手机号"
+            android:text=""/>
+
+        <View
+            android:id="@+id/footerView"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/c_FF999999"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp">
+
+        <EditText
+            android:id="@+id/password_ext"
+            android:layout_above="@+id/footerView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:drawableLeft="@mipmap/password_img"
+            android:drawablePadding="5dp"
+            android:background="@null"
+            android:maxLength="11"
+            android:hint="请输入密码"
+            android:text=""/>
+
+        <View
+            android:id="@+id/footerView1"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/c_FF999999"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp">
+
+        <EditText
+            android:id="@+id/password_again_ext"
+            android:layout_above="@+id/footerView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:drawableLeft="@mipmap/password_img"
+            android:drawablePadding="5dp"
+            android:background="@null"
+            android:maxLength="11"
+            android:hint="请再次输入密码"
+            android:text=""/>
+
+        <View
+            android:id="@+id/footerView2"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/c_FF999999"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/register_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="下一步"
+        android:textSize="17dp"
+        android:gravity="center"
+        android:textColor="@color/c_FFFFFFFF"
+        android:background="@mipmap/next_normal"/>
+
+</LinearLayout>

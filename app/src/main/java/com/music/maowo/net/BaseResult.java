@@ -11,7 +11,25 @@ import java.io.Serializable;
 public class BaseResult<T> implements Serializable {
     public int code;
     public String message;
+    public String reason;
+    public int reasult;
     public T data;
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public int getReasult() {
+        return reasult;
+    }
+
+    public void setReasult(int reasult) {
+        this.reasult = reasult;
+    }
 
     public int getCode() {
         return code;

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:drawableLeft="@mipmap/mobile_img"
+            android:layout_marginTop="10dp"
+            android:drawablePadding="5dp"
+            android:textSize="13dp"
+            android:textColor="@color/c_FF10BBE6"
+            android:text="输入手机号"/>
+
+        <View
+            android:id="@+id/footerView"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/c_FF10BBE6"/>
+
+        <EditText
+            android:id="@+id/mobile_ext"
+            android:layout_above="@+id/footerView"
+            android:layout_below="@+id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/delete_btn"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="2dp"
+            android:background="@null"
+            android:layout_marginTop="10dp"
+            android:maxLength="11"
+            android:text=""/>
+
+        <ImageButton
+            android:id="@+id/delete_btn"
+            android:layout_above="@+id/footerView"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:background="@mipmap/delete_img"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp">
+
+        <EditText
+            android:id="@+id/password_ext"
+            android:layout_above="@+id/footerView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:drawableLeft="@mipmap/password_img"
+            android:drawablePadding="5dp"
+            android:background="@null"
+            android:layout_marginTop="10dp"
+            android:maxLength="11"
+            android:text=""/>
+
+        <View
+            android:id="@+id/footerView1"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/c_FF999999"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="登录"
+        android:textSize="17dp"
+        android:gravity="center"
+        android:textColor="@color/c_FFFFFFFF"
+        android:background="@mipmap/next_normal"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/register_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/c_FF999999"
+            android:background="@null"
+            android:textSize="13dp"
+            android:text="注册账号"/>
+
+        <Button
+            android:id="@+id/forgot_password_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/c_FF999999"
+            android:background="@null"
+            android:textSize="13dp"
+            android:text="找回密码"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

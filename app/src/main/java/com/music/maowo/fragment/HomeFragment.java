@@ -96,6 +96,16 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
                     public void onNext(BaseResult<LoginAndRegisterResponse> loginAndRegisterResponseBaseResult) {
                         Toast.makeText(getContext(), "result = " + loginAndRegisterResponseBaseResult.data.token, Toast.LENGTH_LONG).show();
                     }
+
+                    @Override
+                    public void onCompleted() {
+                        super.onCompleted();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                    }
                 });
     }
 
