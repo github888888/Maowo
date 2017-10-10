@@ -48,10 +48,13 @@ public class NicknameActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.ok_btn, R.id.man_btn, R.id.woman_btn, R.id.over_read_btn, R.id.user_agreement_btn})
+    @OnClick({R.id.iv_back, R.id.ok_btn, R.id.man_btn, R.id.woman_btn, R.id.over_read_btn, R.id.user_agreement_btn})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
             case R.id.ok_btn:
                 if (TextUtils.isEmpty(genderStr)) {
                     MyApplication.toast(this, "请选择昵称");

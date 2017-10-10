@@ -1,120 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="15dp"
-    android:layout_marginRight="15dp">
+    android:layout_height="match_parent">
 
     <RelativeLayout
+        android:id="@+id/top"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:orientation="vertical">
+        android:layout_height="44dp"
+        android:background="@color/c_FF10BBE6">
 
         <TextView
-            android:id="@+id/text1"
+            android:id="@+id/tv_tttle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:drawableLeft="@mipmap/mobile_img"
-            android:layout_marginTop="10dp"
-            android:drawablePadding="5dp"
-            android:textSize="13dp"
-            android:textColor="@color/c_FF10BBE6"
-            android:text="输入手机号"/>
-
-        <View
-            android:id="@+id/footerView"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/c_FF10BBE6"/>
-
-        <EditText
-            android:id="@+id/mobile_ext"
-            android:layout_above="@+id/footerView"
-            android:layout_below="@+id/text1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/delete_btn"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="2dp"
-            android:background="@null"
-            android:layout_marginTop="10dp"
-            android:maxLength="11"
-            android:text=""/>
+            android:layout_centerInParent="true"
+            android:text="登录"
+            android:textColor="@color/c_FFFFFFFF"
+            android:textSize="17sp" />
 
         <ImageButton
-            android:id="@+id/delete_btn"
-            android:layout_above="@+id/footerView"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:background="@mipmap/delete_img"/>
+            android:id="@+id/iv_back"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:scaleType="center"
+            android:background="@null"
+            android:src="@mipmap/while_back_left_arrow" />
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:drawableLeft="@mipmap/mobile_img"
+                android:layout_marginTop="10dp"
+                android:drawablePadding="5dp"
+                android:textSize="13dp"
+                android:textColor="@color/c_FF10BBE6"
+                android:text="输入手机号"/>
+
+            <View
+                android:id="@+id/footerView"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/c_FF10BBE6"/>
+
+            <EditText
+                android:id="@+id/mobile_ext"
+                android:layout_above="@+id/footerView"
+                android:layout_below="@+id/text1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/delete_btn"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="2dp"
+                android:background="@null"
+                android:layout_marginTop="10dp"
+                android:maxLength="11"
+                android:text="18514430029"/>
+
+            <ImageButton
+                android:id="@+id/delete_btn"
+                android:layout_above="@+id/footerView"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:background="@mipmap/delete_img"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp">
+
+            <EditText
+                android:id="@+id/password_ext"
+                android:layout_above="@+id/footerView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:drawableLeft="@mipmap/password_img"
+                android:drawablePadding="5dp"
+                android:background="@null"
+                android:layout_marginTop="10dp"
+                android:maxLength="11"
+                android:hint="请输入密码，6-16位字符"
+                android:text="123456"/>
+
+            <View
+                android:id="@+id/footerView1"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/c_FF999999"/>
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/login_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:text="登录"
+            android:textSize="17dp"
+            android:gravity="center"
+            android:textColor="@color/c_FFFFFFFF"
+            android:background="@mipmap/next_normal"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/register_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/c_FF999999"
+                android:background="@null"
+                android:textSize="13dp"
+                android:text="注册账号"/>
+
+            <Button
+                android:id="@+id/forgot_password_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/c_FF999999"
+                android:background="@null"
+                android:textSize="13dp"
+                android:text="找回密码"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="64dp">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="54dp"
+        android:layout_alignParentBottom="true">
 
-        <EditText
-            android:id="@+id/password_ext"
-            android:layout_above="@+id/footerView1"
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/wechat_btn"
+            android:layout_toLeftOf="@+id/sina_btn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
-            android:drawableLeft="@mipmap/password_img"
-            android:drawablePadding="5dp"
             android:background="@null"
-            android:layout_marginTop="10dp"
-            android:maxLength="11"
-            android:text=""/>
+            android:src="@mipmap/wechat_img"/>
 
-        <View
-            android:id="@+id/footerView1"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/c_FF999999"/>
+        <ImageButton
+            android:id="@+id/sina_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:src="@mipmap/sina_img"/>
+
+        <ImageButton
+            android:id="@+id/qq_btn"
+            android:layout_toRightOf="@+id/sina_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:src="@mipmap/qq_img"/>
 
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/login_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:text="登录"
-        android:textSize="17dp"
-        android:gravity="center"
-        android:textColor="@color/c_FFFFFFFF"
-        android:background="@mipmap/next_normal"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
-
-        <Button
-            android:id="@+id/register_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/c_FF999999"
-            android:background="@null"
-            android:textSize="13dp"
-            android:text="注册账号"/>
-
-        <Button
-            android:id="@+id/forgot_password_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:textColor="@color/c_FF999999"
-            android:background="@null"
-            android:textSize="13dp"
-            android:text="找回密码"/>
-
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>

@@ -53,10 +53,13 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.login_btn, R.id.register_btn, R.id.forgot_password_btn, R.id.delete_btn})
+    @OnClick({R.id.iv_back, R.id.login_btn, R.id.register_btn, R.id.forgot_password_btn, R.id.delete_btn})
     public void onClick(View view){
         Intent intent;
         switch (view.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
             case R.id.login_btn:
                 String mobileStr = mMobileExt.getText().toString();
                 String passwordStr = mPasswordExt.getText().toString();
