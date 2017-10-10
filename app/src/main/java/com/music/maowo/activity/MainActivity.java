@@ -1,9 +1,12 @@
 package com.music.maowo.activity;
 
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;;
 
+import com.music.maowo.Constants;
+import com.music.maowo.MyApplication;
 import com.music.maowo.R;
 import com.music.maowo.adapter.MyFragmentPagerAdapter;
 import com.music.maowo.anno.Layout;
@@ -71,6 +74,27 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
                     break;
 
             }
+        }
+    }
+
+    private long mExitTime;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            exit();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void exit() {
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            MyApplication.toast(this, "再按一次退出被窝音乐");
+            mExitTime = System.currentTimeMillis();
+        } else {
+            Constants.access_token = "0";
+            finish();
+            System.exit(0);
         }
     }
 

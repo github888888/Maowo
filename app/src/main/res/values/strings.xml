@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">Maowo</string>
     <array name="urls">
-        <item>http://ww4.sinaimg.cn/large/006uZZy8jw1faic1xjab4j30ci08cjrv.jpg</item>
-        <item>http://ww4.sinaimg.cn/large/006uZZy8jw1faic21363tj30ci08ct96.jpg</item>
-        <item>http://ww4.sinaimg.cn/large/006uZZy8jw1faic259ohaj30ci08c74r.jpg</item>
-        <item>http://ww4.sinaimg.cn/large/006uZZy8jw1faic2b16zuj30ci08cwf4.jpg</item>
-        <item>http://ww4.sinaimg.cn/large/006uZZy8jw1faic2e7vsaj30ci08cglz.jpg</item>
+        <item>http://123.59.214.241/static/images/11.jpg</item>
+        <item>http://123.59.214.241/static/images/12.jpg</item>
+        <item>http://123.59.214.241/static/images/13.jpg</item>
+        <item>http://123.59.214.241/static/images/14.jpg</item>
+        <item>http://123.59.214.241/static/images/13.jpg</item>
+
     </array>
     <string name="setting_key_mobile_network_play">mobile_network_play</string>
     <string name="setting_key_mobile_network_download">mobile_network_download</string>

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.music.maowo.Constants;
 import com.music.maowo.MyApplication;
 import com.music.maowo.R;
 import com.music.maowo.activity.BaseActivity;
@@ -63,7 +64,7 @@ public class LoginActivity extends BaseActivity {
                     MyApplication.toast(this, "用户名或密码不能为空");
                 } else {
                     Observable<BaseResult<LoginAndRegisterResponse>> observable =
-                            RetrofitManager.getServices().register(mobileStr, passwordStr);
+                            RetrofitManager.getServices().login(mobileStr, passwordStr);
                     observable.subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(wapper);
@@ -87,11 +88,14 @@ public class LoginActivity extends BaseActivity {
         @Override
         public void onNext(BaseResult<LoginAndRegisterResponse> loginAndRegisterResponseBaseResult) {
             MyApplication.toast(LoginActivity.this, "result = " + loginAndRegisterResponseBaseResult.data.token);
+            if ((loginAndRegisterResponseBaseResult == null || loginAndRegisterResponseBaseResult.data == null || loginAndRegisterResponseBaseResult.data.token == 0)) return;
             int result = loginAndRegisterResponseBaseResult.getReasult();
+            Constants.access_token = String.valueOf(loginAndRegisterResponseBaseResult.data.token);
             MyApplication.toast(LoginActivity.this, result == 1 ? "登录成功":"登录失败");
             if (result == 1) {
                 Intent intent = new Intent(LoginActivity.this, NicknameActivity.class);
                 startActivity(intent);
+                finish();
             }
         }
 

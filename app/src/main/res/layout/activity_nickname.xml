@@ -42,11 +42,14 @@
             android:textSize="17dp"
             android:text="帅哥"/>
 
-        <RadioButton
+        <ImageButton
             android:id="@+id/man_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"/>
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/info_gender_selector"/>
 
     </RelativeLayout>
 
@@ -71,11 +74,14 @@
             android:textSize="17dp"
             android:text="美女"/>
 
-        <RadioButton
+        <ImageButton
             android:id="@+id/woman_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"/>
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/info_gender_selector"/>
 
     </RelativeLayout>
 
