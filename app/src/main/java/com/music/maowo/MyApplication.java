@@ -11,6 +11,8 @@ import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
 
+import com.mob.MobApplication;
+
 import java.util.List;
 
 import static java.security.AccessController.getContext;
@@ -19,7 +21,7 @@ import static java.security.AccessController.getContext;
  * Created by Administrator on 2017-9-16 0016.
  */
 
-public class MyApplication extends Application {
+public class MyApplication extends MobApplication {
 
     private static Application mContext;
     private static MyApplication instance;

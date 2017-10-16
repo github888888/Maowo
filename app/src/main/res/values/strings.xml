@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Maowo</string>
+    <string name="app_name">被窝音乐</string>
     <array name="urls">
         <item>http://123.59.214.241/static/images/11.jpg</item>
         <item>http://123.59.214.241/static/images/12.jpg</item>
