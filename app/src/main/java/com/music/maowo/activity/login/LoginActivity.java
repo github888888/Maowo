@@ -132,9 +132,9 @@ public class LoginActivity extends BaseActivity {
         public void onTextChanged(CharSequence s, int i, int i1, int i2) {
             mDeleteBtn.setVisibility(s.length()>0?View.VISIBLE:View.INVISIBLE);
             if (s.length()>0) {
-                footerView1.setBackgroundColor(Color.parseColor("FF10BBE6"));
+                footerView1.setBackgroundColor(Color.parseColor("#FF10BBE6"));
             } else {
-                footerView1.setBackgroundColor(Color.parseColor("FF999999"));
+                footerView1.setBackgroundColor(Color.parseColor("#FF999999"));
             }
         }
 
@@ -153,9 +153,9 @@ public class LoginActivity extends BaseActivity {
         @Override
         public void onTextChanged(CharSequence s, int i, int i1, int i2) {
             if (s.length()>0) {
-                footerView2.setBackgroundColor(Color.parseColor("FF10BBE6"));
+                footerView2.setBackgroundColor(Color.parseColor("#FF10BBE6"));
             } else {
-                footerView2.setBackgroundColor(Color.parseColor("FF999999"));
+                footerView2.setBackgroundColor(Color.parseColor("#FF999999"));
             }
         }
 
