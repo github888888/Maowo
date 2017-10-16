@@ -79,7 +79,6 @@
         <meta-data android:name="Mob-AppKey" android:value="您的AppKey"/>
         <meta-data android:name="Mob-AppSecret" android:value="您的AppSecret"/>
 
-        <activity android:name=".activity.login.UpdatePasswordActivity" android:screenOrientation="portrait" />
         <activity android:name=".activity.MusicAndReadActivity"  android:screenOrientation="portrait" />
 
         <service android:name=".service.PlayService" />
