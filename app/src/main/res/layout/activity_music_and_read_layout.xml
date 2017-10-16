@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.music.maowo.view.KeyboardRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/krl_root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipChildren="true"
@@ -88,6 +89,16 @@
                 android:padding="13dp"
                 android:textColor="#666666"
                 android:textSize="14sp" />
+
+            <com.music.maowo.view.CustomListView
+                android:id="@+id/lv_content"
+                android:layout_below="@id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:divider="#00000000"
+                android:dividerHeight="0dp"/>
         </RelativeLayout>
 
     </com.music.maowo.view.ObservableScrollView>
@@ -142,4 +153,36 @@
             android:textSize="16sp" />
 
     </RelativeLayout>
-</RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_send_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/c_FFDDDDDD"
+        android:visibility="gone" >
+
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_margin="15dp"
+            android:gravity="top|left"
+            android:padding="10dp"
+            android:textColor="@color/c_FF999999"
+            android:textSize="14sp"
+            android:background="@color/c_FFFFFFFF" />
+
+        <TextView
+            android:id="@+id/tv_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/et_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
+            android:text="发送" />
+    </RelativeLayout>
+</com.music.maowo.view.KeyboardRelativeLayout>

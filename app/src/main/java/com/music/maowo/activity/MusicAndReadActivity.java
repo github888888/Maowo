@@ -1,11 +1,16 @@
 package com.music.maowo.activity;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,13 +20,19 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.music.maowo.R;
 import com.music.maowo.anno.Layout;
+import com.music.maowo.bean.CommentInfo;
 import com.music.maowo.bean.Music;
 import com.music.maowo.bean.OnlineMusic;
 import com.music.maowo.fragment.PlayFragment;
 import com.music.maowo.manager.OnPlayerEventListener;
 import com.music.maowo.net.CoverLoader;
 import com.music.maowo.view.CircleImageView;
+import com.music.maowo.view.CustomListView;
+import com.music.maowo.view.KeyboardRelativeLayout;
 import com.music.maowo.view.ObservableScrollView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -31,6 +42,8 @@ import butterknife.BindView;
  */
 @Layout(R.layout.activity_music_and_read_layout)
 public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventListener, View.OnClickListener {
+    @BindView(R.id.krl_root_view)
+    KeyboardRelativeLayout krl_root_view;
     @BindView(R.id.iv_favour)
     ImageView iv_favour;
     @BindView(R.id.iv_praise)
@@ -62,11 +75,27 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
     @BindView(R.id.rl_music_container)
     RelativeLayout rl_music_container;
 
+    @BindView(R.id.lv_content)
+    CustomListView lv_content;
+
+    @BindView(R.id.rl_send_message)
+    RelativeLayout rl_send_message;
+    @BindView(R.id.et_content)
+    EditText et_content;
+    @BindView(R.id.tv_send)
+    TextView tv_send;
+
+
     private int position;
     private OnlineMusic onlineMusic;
     private int iv_backgroundHeight = 0;
     private int startColor = 0xffffffff;
     private int endColor = 0xff333333;
+    private boolean isFavor = false;
+    private boolean isPraise = false;
+    private List<CommentInfo> commentList;
+
+    private CommentAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,8 +110,17 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
             public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
                 float alpha = y  * 1.0f / iv_backgroundHeight >= 1 ? 1.0f : y * 1.0f  / iv_backgroundHeight;
                 v_background.setAlpha(alpha);
-
                 tv_play_bar_title.setTextColor(getColorFrom(startColor, endColor, alpha));
+            }
+        });
+        krl_root_view.setOnkbdStateListener(new KeyboardRelativeLayout.onKybdsChangeListener() {
+            @Override
+            public void onKeyBoardStateChange(int state) {
+                if (state == KeyboardRelativeLayout.KEYBOARD_STATE_SHOW) {
+                    rl_send_message.setVisibility(View.VISIBLE);
+                } else {
+                    rl_send_message.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -126,6 +164,19 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
                 "　　在这台1000公斤推力的发动机中心，核心部件就是眼前这60片单晶叶片。发动机将空气进行压缩之后压入燃烧室，在有限的空间内和燃料发生剧烈燃烧，产生猛烈的燃气喷射流，推动这些叶片高速旋转，让看似单薄的零件迸发出惊人的动力，每一片叶片输出的马力都相当于一台2.0排量的SUV汽车。\n" +
                 "\n" +
                 "　　朱俊强：我们一千公斤级的发动机，它的高压转速都在三万多转接近四万转，大概的切向速度就是每秒种450米左右，温度大概是1720多度。");
+
+        commentList = new ArrayList<>();
+//         <item></item>
+//        <item>http://123.59.214.241/static/images/12.jpg</item>
+//        <item>http://123.59.214.241/static/images/13.jpg</item>
+//        <item>http://123.59.214.241/static/images/14.jpg</item>
+//        <item>http://123.59.214.241/static/images/13.jpg</item>
+        commentList.add(new CommentInfo("http://123.59.214.241/static/images/11.jpg", "author1", "2017-08-09", "你好"));
+        commentList.add(new CommentInfo("http://123.59.214.241/static/images/12.jpg", "author2", "2017-08-10", "你好1"));
+        commentList.add(new CommentInfo("http://123.59.214.241/static/images/13.jpg", "author3", "2017-08-11", "你好2"));
+        commentList.add(new CommentInfo("http://123.59.214.241/static/images/14.jpg", "author4", "2017-08-12", "你好3"));
+        adapter = new CommentAdapter();
+        lv_content.setAdapter(adapter);
     }
 
     public int getColorFrom(int startColor, int endColor, float radio) {
@@ -154,6 +205,10 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
     protected void setListener() {
         iv_play_bar_play.setOnClickListener(this);
         rl_music_container.setOnClickListener(this);
+        iv_favour.setOnClickListener(this);
+        iv_praise.setOnClickListener(this);
+        iv_msg.setOnClickListener(this);
+        tv_send.setOnClickListener(this);
     }
 
     @Override
@@ -212,24 +267,60 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
 
     }
 
+
     @Override
     public void onClick(View v) {
         if (v == iv_play_bar_play) {
             getPlayService().playPause();
         } else if (v == rl_music_container) {
             showPlayingFragment();
+        } else if (v == iv_favour) {
+            isFavor ^= true;
+            iv_favour.setSelected(isFavor);
+        } else if (v == iv_praise) {
+            isPraise ^= true;
+            iv_praise.setSelected(isPraise);
+        } else if (v == iv_msg) {
+            rl_send_message.setVisibility(View.VISIBLE);
+            showKeyboard();
+        } else if (v == tv_send) {
+            rl_send_message.setVisibility(View.GONE);
+            hideKeyboard();
+            commentList.add(new CommentInfo("http://123.59.214.241/static/images/12.jpg", "author2", "2017-08-10", "你好1"));
+            adapter.notifyDataSetChanged();
         }
     }
 
+    private void showKeyboard(){
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            et_content.requestFocus();
+            imm.showSoftInput(et_content, 0);
+        }
+    }
+
+    private void hideKeyboard(){
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(et_content.getWindowToken(), 0);
+        }
+    }
 
     private boolean isPlayFragmentShow = false;
     private PlayFragment mPlayFragment;
+
+
 
 
     @Override
     public void onBackPressed() {
         if (mPlayFragment != null && isPlayFragmentShow) {
             hidePlayingFragment();
+            return;
+        }
+        if (rl_send_message.isShown()) {
+            rl_send_message.setVisibility(View.GONE);
+            hideKeyboard();
             return;
         }
         super.onBackPressed();
@@ -258,5 +349,64 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
         ft.hide(mPlayFragment);
         ft.commitAllowingStateLoss();
         isPlayFragmentShow = false;
+    }
+
+    public class CommentAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return commentList.size();
+        }
+
+        @Override
+        public CommentInfo getItem(int i) {
+            return commentList.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i,View view, ViewGroup viewGroup) {
+            final ViewHolder holder;
+            if (null == view) {
+                view = View.inflate(getApplicationContext(), R.layout.activity_music_and_read_comment_item_layout, null);
+                holder = new ViewHolder();
+                holder.civ_header = view.findViewById(R.id.civ_author_show);
+                holder.tv_author_name = view.findViewById(R.id.tv_author_name);
+                holder.tv_post_time = view.findViewById(R.id.tv_post_time);
+                holder.tv_post_content = view.findViewById(R.id.tv_post_content);
+                view.setTag(holder);
+            } else {
+                holder = (ViewHolder) view.getTag();
+            }
+            CommentInfo info = getItem(i);
+            final CircleImageView temp_civ = holder.civ_header;
+            temp_civ.setTag(info);
+            Glide.with(getApplicationContext()).load(info.authorUrl)
+                    .asBitmap().into(new SimpleTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                    CommentInfo temp = (CommentInfo) temp_civ.getTag();
+                    if (holder.info !=  temp) return;
+                    temp_civ.setImageBitmap(resource);
+                }
+            });
+            holder.tv_author_name.setText(info.authorName);
+            holder.tv_post_time.setText(info.postTime);
+            holder.tv_post_content.setText(info.postContent);
+            holder.info = info;
+            return view;
+        }
+    }
+
+    public class ViewHolder {
+        public CircleImageView civ_header;
+        public TextView tv_author_name;
+        public TextView tv_post_time;
+        public TextView tv_post_content;
+        public CommentInfo info;
     }
 }
