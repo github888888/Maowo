@@ -1,24 +1,24 @@
 package com.music.maowo.activity.login;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
-import com.mob.commons.SHARESDK;
 import com.music.maowo.Constants;
 import com.music.maowo.MyApplication;
 import com.music.maowo.R;
 import com.music.maowo.Utils.Logger;
 import com.music.maowo.activity.BaseActivity;
-import com.music.maowo.activity.MainActivity;
 import com.music.maowo.anno.Layout;
 import com.music.maowo.net.BaseResult;
 import com.music.maowo.net.LoginAndRegisterResponse;
@@ -26,6 +26,8 @@ import com.music.maowo.net.ObserverWapper;
 import com.music.maowo.net.RetrofitManager;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -59,12 +61,19 @@ public class LoginActivity extends BaseActivity {
     Button mRegisterBtn;
     @BindView(R.id.forgot_password_btn)
     Button mForgotPasswordBtn;
+    @BindView(R.id.footerView1)
+    View footerView1;
+    @BindView(R.id.footerView2)
+    View footerView2;
+    @BindView(R.id.show_password)
+    ImageButton mShowPass;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        mMobileExt.addTextChangedListener(watcherPhone);
+        mPasswordExt.addTextChangedListener(watcherPass);
     }
 
     @OnClick({R.id.iv_back, R.id.login_btn, R.id.register_btn, R.id.forgot_password_btn, R.id.delete_btn, R.id.wechat_btn, R.id.sina_btn, R.id.qq_btn})
@@ -77,8 +86,11 @@ public class LoginActivity extends BaseActivity {
             case R.id.login_btn:
                 String mobileStr = mMobileExt.getText().toString();
                 String passwordStr = mPasswordExt.getText().toString();
+
                 if (TextUtils.isEmpty(mobileStr) || TextUtils.isEmpty(passwordStr)) {
-                    MyApplication.toast(this, "用户名或密码不能为空");
+                    MyApplication.toast(this, "手机号码或密码不能为空");
+                } else if (!isMobileNO(mobileStr)) {
+                    MyApplication.toast(this, "手机号码不正确");
                 } else {
                     Observable<BaseResult<LoginAndRegisterResponse>> observable =
                             RetrofitManager.getServices().login(mobileStr, passwordStr);
@@ -108,6 +120,55 @@ public class LoginActivity extends BaseActivity {
                 shareSDKLogin(QQ.NAME);
                 break;
         }
+    }
+
+    TextWatcher watcherPhone = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+            mDeleteBtn.setVisibility(s.length()>0?View.VISIBLE:View.INVISIBLE);
+            if (s.length()>0) {
+                footerView1.setBackgroundColor(Color.parseColor("FF10BBE6"));
+            } else {
+                footerView1.setBackgroundColor(Color.parseColor("FF999999"));
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
+    TextWatcher watcherPass = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+            if (s.length()>0) {
+                footerView2.setBackgroundColor(Color.parseColor("FF10BBE6"));
+            } else {
+                footerView2.setBackgroundColor(Color.parseColor("FF999999"));
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
+    public static boolean isMobileNO(String mobiles){
+        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
+        Matcher m = p.matcher(mobiles);
+        return m.matches();
     }
 
     private void shareSDKLogin(String name) {
