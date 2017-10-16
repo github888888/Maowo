@@ -10,6 +10,8 @@ import android.support.v4.util.LongSparseArray;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import com.music.maowo.Utils.ScreenUtils;
+import com.music.maowo.Utils.ToastUtils;
 import com.music.maowo.bean.DownloadMusicInfo;
 import com.music.maowo.bean.Music;
 import com.music.maowo.bean.SongListInfo;
@@ -50,6 +52,8 @@ public class AppCache {
     private void onInit(Application application) {
         mContext = application.getApplicationContext();
         Preferences.init(mContext);
+        ScreenUtils.init(mContext);
+        ToastUtils.init(mContext);
         CoverLoader.getInstance().init(mContext);
         application.registerActivityLifecycleCallbacks(new ActivityLifecycle());
     }
