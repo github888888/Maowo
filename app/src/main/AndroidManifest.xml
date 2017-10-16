@@ -25,7 +25,10 @@
         <activity android:name=".activity.login.LoginActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.login.NicknameActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.login.RegisterActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activity.login.UpdatePasswordActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.login.UpdatePasswordActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.MusicAndReadActivity"  android:screenOrientation="portrait" />
+
+        <service android:name=".service.PlayService" />
     </application>
 
 </manifest>

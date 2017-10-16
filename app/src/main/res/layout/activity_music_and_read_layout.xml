@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="true"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:id="@+id/ll_bottom_container"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:id="@+id/iv_favour"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="center"
+            android:src="@drawable/detail_collection_selector" />
+
+        <ImageView
+            android:id="@+id/iv_praise"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="center"
+            android:src="@drawable/detail_praise_selector" />
+
+        <ImageView
+            android:id="@+id/iv_msg"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="center"
+            android:src="@mipmap/detail_reply" />
+
+        <ImageView
+            android:id="@+id/iv_share"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="center"
+            android:src="@mipmap/detail_share" />
+    </LinearLayout>
+
+    <com.music.maowo.view.ObservableScrollView
+        android:id="@+id/sv_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/ll_bottom_container">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_background"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="70dp"
+                android:text="biaoti"
+                android:textColor="#FFFFFFFF"
+                android:textSize="18sp" />
+
+            <com.music.maowo.view.CircleImageView
+                android:id="@+id/civ_header"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="150dp"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#FFFFFFFF" />
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/iv_background"
+                android:padding="13dp"
+                android:textColor="#666666"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+    </com.music.maowo.view.ObservableScrollView>
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/rl_music_container"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <View
+            android:id="@+id/v_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/c_FFFFFFFF" />
+
+        <ImageView
+            android:id="@+id/iv_play_bar_cover"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="13dp"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/iv_play_bar_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="13dp"
+            android:src="@drawable/play_bar_btn_play_pause_selector" />
+
+        <TextView
+            android:id="@+id/tv_play_bar_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="13dp"
+            android:layout_toLeftOf="@id/iv_play_bar_play"
+            android:layout_toRightOf="@id/iv_play_bar_cover"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="无音乐"
+            android:textColor="@color/c_FF333333"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+</RelativeLayout>

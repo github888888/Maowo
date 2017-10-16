@@ -11,6 +11,8 @@ import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
 
+import com.music.maowo.other.AppCache;
+
 import java.util.List;
 
 import static java.security.AccessController.getContext;
@@ -32,7 +34,10 @@ public class MyApplication extends Application {
         DisplayMetrics dm = getResources().getDisplayMetrics();
         Constants.screenHeight = dm.heightPixels;
         Constants.screenWidth  = dm.widthPixels;
+
+        AppCache.init(this);
     }
+
 
     public MyApplication() {
         this.instance = this;

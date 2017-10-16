@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -17,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.music.maowo.Constants;
 import com.music.maowo.R;
 import com.music.maowo.activity.HotAndNewArticleActivity;
+import com.music.maowo.activity.MusicAndReadActivity;
 import com.music.maowo.adapter.HomeFragmentAdapter;
 import com.music.maowo.bean.TopicSummaryInfo;
 import com.music.maowo.net.BaseResult;
@@ -83,6 +85,19 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
         list.add(new TopicSummaryInfo("nusicUrl", images.get(4), "title5", "description5"));
         adapter = new HomeFragmentAdapter(list, getContext());
         gv_content.setAdapter(adapter);
+        gv_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                HomeFragmentAdapter.ViewHolder holder = (HomeFragmentAdapter.ViewHolder) view.getTag();
+                if (null == holder || null == holder.info) return;
+                gotoDetailActivity(holder.info);
+            }
+        });
+    }
+
+    private void gotoDetailActivity(TopicSummaryInfo info) {
+        Intent intent = new Intent(getActivity(), MusicAndReadActivity.class);
+        startActivity(intent);
     }
 
     @Override

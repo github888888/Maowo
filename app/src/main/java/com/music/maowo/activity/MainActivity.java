@@ -1,5 +1,11 @@
 package com.music.maowo.activity;
 
+import android.Manifest;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.View;
@@ -10,6 +16,8 @@ import com.music.maowo.MyApplication;
 import com.music.maowo.R;
 import com.music.maowo.adapter.MyFragmentPagerAdapter;
 import com.music.maowo.anno.Layout;
+import com.music.maowo.other.AppCache;
+import com.music.maowo.service.PlayService;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -26,7 +34,27 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     ViewPager vp_mainactivity_content;
 
     private MyFragmentPagerAdapter mAdapter;
+    private PlayServiceConnection mPlayServiceConnection;
 
+
+    private void bindService() {
+        Intent intent = new Intent();
+        intent.setClass(this, PlayService.class);
+        mPlayServiceConnection = new PlayServiceConnection();
+        bindService(intent, mPlayServiceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    private class PlayServiceConnection implements ServiceConnection {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            final PlayService playService = ((PlayService.PlayBinder) service).getService();
+            AppCache.setPlayService(playService);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+        }
+    }
     @Override
     protected void initDataAndListener() {
         mAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
@@ -34,6 +62,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         vp_mainactivity_content.setCurrentItem(0);
         vp_mainactivity_content.addOnPageChangeListener(this);
         tv_mainactivity_home.setSelected(true);
+
+        bindService();
     }
 
     @OnClick({R.id.tv_mainactivity_home, R.id.tv_mainactivity_category,  R.id.tv_mainactivity_mine})
