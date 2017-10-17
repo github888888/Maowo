@@ -40,14 +40,14 @@ public abstract class BaseActivity extends FragmentActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(getLayoutID());
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         ButterKnife.bind(this);
         initDataAndListener();
         // 透明状态栏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 //            dealStatusBar();
         }
-        setSystemBarTransparent();
+//        setSystemBarTransparent();
     }
 
     protected void initDataAndListener(){}
@@ -72,9 +72,9 @@ public abstract class BaseActivity extends FragmentActivity {
     @SuppressWarnings("deprecation")
     @TargetApi(Build.VERSION_CODES.KITKAT)
     protected void dealStatusBar() {
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        mTintManager = new SystemBarTintManager(this);
-        mTintManager.setStatusBarTintEnabled(true);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        mTintManager = new SystemBarTintManager(this);
+//        mTintManager.setStatusBarTintEnabled(true);
         // Constants.STATUSBAR_HEIGHT = mTintManager.getConfig().getStatusBarHeight();
     }
 

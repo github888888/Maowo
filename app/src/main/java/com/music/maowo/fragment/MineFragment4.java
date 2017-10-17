@@ -16,6 +16,8 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.music.maowo.R;
 import com.music.maowo.activity.SubmitArticleActivity;
+import com.music.maowo.activity.mine.SettingActivity;
+import com.music.maowo.activity.mine.UserInfoActivity;
 import com.music.maowo.view.CircleImageView;
 
 import butterknife.BindView;
@@ -79,12 +81,15 @@ public class MineFragment4 extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        Intent intent;
         if (view == iv_user_setting) {
-            Toast.makeText(getActivity(), "iv_user_setting", Toast.LENGTH_LONG).show();
+            intent = new Intent(getActivity(), SettingActivity.class);
+            startActivity(intent);
         } else if (view == tv_user_edit) {
-            Toast.makeText(getActivity(), "tv_user_edit", Toast.LENGTH_LONG).show();
+            intent = new Intent(getActivity(), UserInfoActivity.class);
+            startActivity(intent);
         } else if (view == tv_submit_article) {
-            Intent intent = new Intent(getActivity(), SubmitArticleActivity.class);
+            intent = new Intent(getActivity(), SubmitArticleActivity.class);
             getActivity().startActivity(intent);
         } else if (view == tv_publish_topic) {
             Toast.makeText(getActivity(), "tv_publish_topic", Toast.LENGTH_LONG).show();
