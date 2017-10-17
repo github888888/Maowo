@@ -1,5 +1,6 @@
 package com.music.maowo.fragment;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.music.maowo.R;
+import com.music.maowo.activity.SubmitArticleActivity;
 import com.music.maowo.view.CircleImageView;
 
 import butterknife.BindView;
@@ -82,7 +84,8 @@ public class MineFragment4 extends Fragment implements View.OnClickListener {
         } else if (view == tv_user_edit) {
             Toast.makeText(getActivity(), "tv_user_edit", Toast.LENGTH_LONG).show();
         } else if (view == tv_submit_article) {
-            Toast.makeText(getActivity(), "tv_submit_article", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getActivity(), SubmitArticleActivity.class);
+            getActivity().startActivity(intent);
         } else if (view == tv_publish_topic) {
             Toast.makeText(getActivity(), "tv_publish_topic", Toast.LENGTH_LONG).show();
         } else if (view == tv_join_topic) {

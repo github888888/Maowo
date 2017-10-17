@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:background="@color/c_FFFFFFFF" />
+
+    <TextView
+        android:id="@+id/tv_submit_type"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:textColor="@color/c_FFFFFFFF"
+        android:textSize="14sp"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/tv_submit_title"
+        android:layout_toRightOf="@id/tv_submit_type"
+        android:includeFontPadding="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/c_FF333333"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_submit_pass_description"
+        android:layout_toRightOf="@id/tv_submit_type"
+        android:layout_below="@id/tv_submit_title"
+        android:includeFontPadding="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FF666666"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/tv_submit_time"
+        android:layout_toRightOf="@id/tv_submit_type"
+        android:layout_below="@id/tv_submit_pass_description"
+        android:includeFontPadding="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/c_FFCCCCCC"
+        android:textSize="12sp" />
+</RelativeLayout>
