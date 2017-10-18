@@ -3,6 +3,7 @@ package com.music.maowo.activity;
 import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.music.maowo.R;
 import com.music.maowo.anno.Layout;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,6 +47,18 @@ public class SubmitArticleActivity extends BaseActivity {
         list.add(new SubmitArticleInfo(3, "title3", "content1", "2017-07-08", true));
         adapter = new SubmitArticleAdapter();
         lv_content.setAdapter(adapter);
+        lv_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                gotoArticleDetailActivity(list.get(i));
+            }
+        });
+    }
+
+    private void gotoArticleDetailActivity(SubmitArticleInfo submitArticleInfo) {
+        Intent intent = new Intent(this, ArticleDetailActivity.class);
+        intent.putExtra(ArticleDetailActivity.INFO_TAG, submitArticleInfo);
+        startActivity(intent);
     }
 
     @OnClick({R.id.iv_back,})
@@ -115,7 +129,7 @@ public class SubmitArticleActivity extends BaseActivity {
 
     }
 
-    public static class SubmitArticleInfo {
+    public static class SubmitArticleInfo implements Serializable{
         public int type;
         public String title;
         public String content;
