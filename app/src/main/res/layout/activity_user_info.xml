@@ -21,31 +21,44 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textColor="#ffffff"
-            android:textSize="17dp"
+            android:textSize="@dimen/text_16_dm"
             android:text="个人资料"/>
 
-        <TextView
+        <Button
             android:id="@+id/iv_save"
             android:layout_width="44dp"
             android:layout_height="44dp"
             android:layout_alignParentRight="true"
             android:gravity="center"
             android:layout_marginRight="10dp"
+            android:background="@null"
             android:textColor="#ffffff"
-            android:textSize="17dp"
-            android:text="保存"/>
+            android:textSize="@dimen/text_14_dm"
+            android:text="@string/mine_user_info_save"/>
     </RelativeLayout>
-    
-    <TextView
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:gravity="center_vertical"
-        android:background="@color/c_FFFFFFFF"
-        android:drawableRight="@mipmap/avator_img"
         android:paddingRight="12dp"
         android:paddingLeft="12dp"
-        android:textSize="17dp"
-        android:text="头像"/>
+        android:background="@color/c_FFFFFFFF">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/text_16_dm"
+            android:text="@string/mine_user_info_avatar"/>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="@mipmap/avator_img"/>
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -60,8 +73,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="17dp"
-            android:text="昵称"/>
+            android:textSize="@dimen/text_16_dm"
+            android:text="@string/mine_user_info_nickname"/>
 
         <EditText
             android:id="@+id/nick_name"
@@ -72,7 +85,9 @@
             android:background="@null"
             android:gravity="right|center_vertical"
             android:lines="1"
-            android:hint="请填写您的昵称"
+            android:hint="@string/mine_user_input_nickname"
+            android:textColor="@color/c_B2B2B2"
+            android:textSize="@dimen/text_14_dm"
             android:text=""/>
 
     </LinearLayout>
@@ -97,15 +112,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="17dp"
-            android:text="性别"/>
+            android:textSize="@dimen/text_16_dm"
+            android:text="@string/mine_user_info_gender"/>
 
         <Button
             android:id="@+id/woman_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="女"
+            android:text="@string/mine_user_info_woman"
             android:background="@null"
             android:drawablePadding="8dp"
             android:drawableLeft="@drawable/main_live_face_dot"/>
@@ -116,7 +131,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="25dp"
-            android:text="男"
+            android:text="@string/mine_user_info_man"
             android:background="@null"
             android:drawablePadding="8dp"
             android:drawableLeft="@drawable/main_live_face_dot"/>
@@ -143,8 +158,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="17dp"
-            android:text="年龄"/>
+            android:textSize="@dimen/text_16_dm"
+            android:text="@string/mine_user_info_age"/>
 
         <EditText
             android:id="@+id/iv_age"
@@ -155,12 +170,12 @@
             android:background="@null"
             android:gravity="right|center_vertical"
             android:lines="1"
-            android:hint="请填写您的年龄"
+            android:hint="@string/mine_user_info_age"
+            android:textSize="@dimen/text_14_dm"
             android:inputType="number"
             android:maxLength="2"
             android:text=""/>
 
     </LinearLayout>
-
 
 </LinearLayout>

@@ -18,4 +18,17 @@
     <string name="mode_shuffle">随机播放</string>
     <string name="mode_one">单曲循环</string>
     <string name="unknown">未知</string>
+    <string name="mine_feedback_hint">猫窝音乐的每一个进步都离不开猫迷的意见和建议</string>
+    <string name="mine_feedback_contact">手机/QQ/邮箱</string>
+    <string name="mine_submit">提交</string>
+    <string name="mine_feedback_content_tip">请输入您的意见和建议</string>
+    <string name="mine_feedback_contact_tip">请输入您的联系方式</string>
+    <string name="mine_user_info_avatar">头像</string>
+    <string name="mine_user_info_nickname">昵称</string>
+    <string name="mine_user_input_nickname">请填写您的昵称</string>
+    <string name="mine_user_info_gender">性别</string>
+    <string name="mine_user_info_man">男</string>
+    <string name="mine_user_info_woman">女</string>
+    <string name="mine_user_info_age">年龄</string>
+    <string name="mine_user_info_save">保存</string>
 </resources>

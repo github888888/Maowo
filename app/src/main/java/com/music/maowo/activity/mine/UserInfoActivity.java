@@ -60,12 +60,12 @@ public class UserInfoActivity extends BaseActivity {
                 }
                 break;
             case R.id.man_btn:
-                gender = "男";
+                gender = getString(R.string.mine_user_info_man);
                 mManBtn.setSelected(true);
                 mWomanBtn.setSelected(false);
                 break;
             case R.id.woman_btn:
-                gender = "女";
+                gender = getString(R.string.mine_user_info_woman);
                 mManBtn.setSelected(false);
                 mWomanBtn.setSelected(true);
                 break;
