@@ -20,6 +20,11 @@
     <color name="c_CC000000">#CC000000</color>
     <color name="c_FFFF9053">#FFFF9053</color>
     <color name="c_FE9153">#FE9153</color>
+    <color name="c_00ACEF">#00acef</color>
+    <color name="c_1498CC">#1498cc</color>
+    <color name="c_4C00ACEF">#4c00acef</color>
+    <color name="c_F2F2F2">#f2f2f2</color>
+    <color name="c_B2B2B2">#b2b2b2</color>
 
     <color name="white">@android:color/white</color>
     <color name="white_8p">#14FFFFFF</color>

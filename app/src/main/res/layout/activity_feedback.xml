@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_F2F2F2">
+
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/c_FF10BBE6">
+
+        <ImageButton
+            android:id="@+id/iv_back"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@null"
+            android:src="@mipmap/while_back_left_arrow"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="#ffffff"
+            android:textSize="17dp"
+            android:text="意见反馈"/>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_below="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/person_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/c_FFFFFFFF"
+                android:orientation="vertical">
+                <EditText
+                    android:id="@+id/feed_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="50dp"
+                    android:background="@null"
+                    android:textColorHint="@color/c_B2B2B2"
+                    android:gravity="top"
+                    android:hint="@string/mine_feedback_hint"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLength="300"
+                    android:textSize="@dimen/text_13_dm" />
+
+                <TextView
+                    android:id="@+id/textViewNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="right"
+                    android:text="0/300"
+                    android:textColor="#888888"
+                    android:textSize="14dp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/feed_contact"
+                android:layout_below="@+id/person_feedback"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:textColorHint="@color/c_B2B2B2"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:hint="@string/mine_feedback_contact"
+                android:background="@color/c_FFFFFFFF"
+                android:lineSpacingExtra="2dp"
+                android:lines="1"
+                android:paddingLeft="10dp"
+                android:textSize="@dimen/text_14_dm" />
+
+            <Button
+                android:id="@+id/submit_btn"
+                android:layout_below="@+id/feed_contact"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/button_selector"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:textAllCaps="false"
+                android:text="@string/mine_submit"
+                android:layout_marginBottom="60dp"
+                android:textColor="@color/c_FFFFFFFF"
+                android:textSize="@dimen/text_16_dm" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
