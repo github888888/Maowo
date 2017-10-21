@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/c_FFFFFFFF" >
+
+    <TextView
+        android:id="@+id/tv_topic_content_value"
+        android:includeFontPadding="false"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/c_FF333333"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_reply_content_symbol"
+        android:layout_below="@id/tv_topic_content_value"
+        android:includeFontPadding="false"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="回复:"
+        android:textColor="#FF10bbe6"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_reply_content_value"
+        android:layout_toRightOf="@id/tv_reply_content_symbol"
+        android:layout_below="@id/tv_topic_content_value"
+        android:includeFontPadding="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FF999999"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_reply_time"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_reply_content_value"
+        android:includeFontPadding="false"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2017-09-08"
+        android:textColor="@color/c_FF999999"
+        android:textSize="12sp" />
+</RelativeLayout>

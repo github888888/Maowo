@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,7 +13,6 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.music.maowo.R;
 import com.music.maowo.anno.Layout;
-import com.music.maowo.bean.CommentInfo;
 import com.music.maowo.view.CircleImageView;
 
 import java.io.Serializable;
@@ -31,7 +29,7 @@ import butterknife.OnClick;
  */
 
 @Layout(R.layout.activity_mine_common_layout)
-public class ReplyTopicActivity extends BaseActivity {
+public class JoinTopicActivity extends BaseActivity {
     @BindView(R.id.tv_tttle)
     TextView tv_title;
     @BindView(R.id.iv_back)
@@ -86,7 +84,7 @@ public class ReplyTopicActivity extends BaseActivity {
         public View getView(int i, View view, ViewGroup viewGroup) {
             final Viewholder holder;
             if (null == view) {
-                view = View.inflate(getApplicationContext(), R.layout.activity_reply_topic_item_layout, null);
+                view = View.inflate(getApplicationContext(), R.layout.activity_join_topic_item_layout, null);
                 holder = new Viewholder();
                 holder.civ_author_show = view.findViewById(R.id.civ_author_show);
                 holder.tv_reply_time = view.findViewById(R.id.tv_reply_time);

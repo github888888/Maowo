@@ -15,8 +15,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.music.maowo.R;
+import com.music.maowo.activity.JoinTopicActivity;
+import com.music.maowo.activity.MyReplyListActivity;
 import com.music.maowo.activity.PublishTopicActivity;
-import com.music.maowo.activity.ReplyTopicActivity;
 import com.music.maowo.activity.SubmitArticleActivity;
 import com.music.maowo.activity.mine.SettingActivity;
 import com.music.maowo.activity.mine.UserInfoActivity;
@@ -97,10 +98,11 @@ public class MineFragment4 extends Fragment implements View.OnClickListener {
             intent = new Intent(getActivity(), PublishTopicActivity.class);
             getActivity().startActivity(intent);
         } else if (view == tv_join_topic) {
-            intent = new Intent(getActivity(), ReplyTopicActivity.class);
+            intent = new Intent(getActivity(), JoinTopicActivity.class);
             getActivity().startActivity(intent);
         } else if (view == tv_mine_reply) {
-            Toast.makeText(getActivity(), "tv_mine_reply", Toast.LENGTH_LONG).show();
+            intent = new Intent(getActivity(), MyReplyListActivity.class);
+            getActivity().startActivity(intent);
         } else if (view == tv_mine_private_letter) {
             Toast.makeText(getActivity(), "tv_mine_private_letter", Toast.LENGTH_LONG).show();
         } else if (view == tv_mine_collection) {
