@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_FFFFFFFF" >
+
+    <TextView
+        android:id="@+id/tv_tttle"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:gravity="center"
+        android:background="@color/c_FF10BBE6"
+        android:text="文章"
+        android:textColor="@color/c_FFFFFFFF"
+        android:textSize="17sp" />
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginRight="15dp"
+        android:scaleType="center"
+        android:src="@mipmap/while_back_left_arrow" />
+
+    <TextView
+        android:id="@+id/tv_submit_title"
+        android:layout_below="@id/tv_tttle"
+        android:layout_centerHorizontal="true"
+        android:includeFontPadding="false"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/c_FF333333"
+        android:text="hhhhh"
+        android:textSize="17sp" />
+
+     <TextView
+        android:id="@+id/tv_article_detail_time"
+         android:layout_below="@id/tv_submit_title"
+        android:layout_width="wrap_content"
+        android:layout_height="12dp"
+        android:includeFontPadding="false"
+        android:layout_marginTop="10dp"
+         android:layout_centerHorizontal="true"
+         android:text="2017-08-07"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:textColor="@color/c_FF999999" />
+    <View
+        android:id="@+id/v_horizontal"
+        android:layout_below="@id/tv_article_detail_time"
+        android:layout_marginTop="18dp"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="#ffe8e8e8" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_below="@id/v_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="13dp"
+        android:textColor="#666666"
+        android:textSize="14sp" />
+</RelativeLayout>

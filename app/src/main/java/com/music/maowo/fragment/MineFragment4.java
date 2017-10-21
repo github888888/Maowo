@@ -21,6 +21,7 @@ import com.music.maowo.activity.MyMessageListActivity;
 import com.music.maowo.activity.MyReplyListActivity;
 import com.music.maowo.activity.PublishTopicActivity;
 import com.music.maowo.activity.SubmitArticleActivity;
+import com.music.maowo.activity.SystemMessageListActivity;
 import com.music.maowo.activity.mine.SettingActivity;
 import com.music.maowo.activity.mine.UserInfoActivity;
 import com.music.maowo.view.CircleImageView;
@@ -112,7 +113,8 @@ public class MineFragment4 extends Fragment implements View.OnClickListener {
             intent = new Intent(getActivity(), MyCollectionListActivity.class);
             getActivity().startActivity(intent);
         } else if (view == tv_mine_system_message) {
-            Toast.makeText(getActivity(), "tv_mine_system_message", Toast.LENGTH_LONG).show();
+            intent = new Intent(getActivity(), SystemMessageListActivity.class);
+            getActivity().startActivity(intent);
         }
     }
 }

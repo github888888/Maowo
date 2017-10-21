@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/v_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:background="@color/c_FFF5F5F5" />
+
+    <TextView
+        android:id="@+id/tv_system_message_time"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/system_message_time_shape"
+        android:layout_centerHorizontal="true"
+        android:text="2019-09-08 09:08"
+        android:textColor="@color/c_FFFFFFFF"
+        android:textSize="10sp"/>
+
+    <View
+        android:id="@+id/v_horizontal_1"
+        android:layout_below="@id/v_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/c_FFFFFFFF" />
+
+    <TextView
+        android:id="@+id/tv_system_message_type"
+        android:layout_below="@id/v_horizontal"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:textColor="@color/c_FFFFFFFF"
+        android:textSize="14sp"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/tv_system_message_title"
+        android:layout_toRightOf="@id/tv_system_message_type"
+        android:includeFontPadding="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/c_FF333333"
+        android:textSize="15sp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignTop="@+id/tv_system_message_type" />
+
+    <TextView
+        android:id="@+id/tv_system_message_content"
+        android:layout_toRightOf="@id/tv_system_message_type"
+        android:layout_below="@id/tv_system_message_title"
+        android:includeFontPadding="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FF666666"
+        android:textSize="13sp" />
+</RelativeLayout>
