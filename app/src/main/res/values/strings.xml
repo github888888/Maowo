@@ -31,4 +31,5 @@
     <string name="mine_user_info_woman">女</string>
     <string name="mine_user_info_age">年龄</string>
     <string name="mine_user_info_save">保存</string>
+    <string name="submit">提交</string>
 </resources>
