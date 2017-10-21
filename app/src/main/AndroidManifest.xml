@@ -44,6 +44,7 @@
         <activity android:name=".activity.JoinTopicActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.MyReplyListActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.MyMessageListActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.MyCollectionListActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.mine.FeedbackActivity" android:screenOrientation="portrait"/>
 
         <activity

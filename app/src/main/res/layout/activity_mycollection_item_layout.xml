@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/c_FFFFFFFF"
+    android:paddingBottom="10dp">
+
+    <com.music.maowo.view.CircleImageView
+        android:id="@+id/civ_author_show"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginLeft="15dp"
+        android:layout_alignTop="@+id/tv_author_name"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="15dp" />
+
+    <TextView
+        android:id="@+id/tv_author_name"
+        android:layout_toRightOf="@id/civ_author_show"
+        android:includeFontPadding="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="明月"
+        android:textColor="@color/c_FF999999"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_collection_time"
+        android:layout_toRightOf="@id/tv_author_name"
+        android:includeFontPadding="false"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2017-09-08"
+        android:textColor="@color/c_FF999999"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_collection_type"
+        android:layout_alignParentRight="true"
+        android:includeFontPadding="false"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:gravity="center"
+        android:background="@drawable/collection_article_type1_shape"
+        android:text="情感"
+        android:textColor="#FF10BBE6"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/iv_article_show"
+        android:layout_below="@id/civ_author_show"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/tv_article_title"
+        android:layout_toRightOf="@id/iv_article_show"
+        android:layout_below="@id/civ_author_show"
+        android:layout_marginRight="15dp"
+        android:includeFontPadding="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="这个梅子很好吃"
+        android:textColor="@color/c_FF333333"
+        android:textSize="14sp" />
+</RelativeLayout>
