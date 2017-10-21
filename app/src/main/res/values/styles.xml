@@ -27,4 +27,21 @@
         <item name="android:backgroundDimAmount">0.1</item>
     </style>
 
+    <style name="load_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>                           <!-- Dialog的windowFrame框为无 -->
+        <item name="android:windowIsFloating">true</item>                       <!-- 是否漂现在activity上 -->
+        <item name="android:windowIsTranslucent">true</item>                    <!-- 是否半透明 -->
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item> <!-- 去除黑色边框的关键设置项 -->
+        <item name="android:backgroundDimEnabled">true</item>                   <!-- 屏幕背景是否变暗 -->
+        <item name="android:backgroundDimAmount">0.5</item>
+    </style>
+
+    <style name="dialogAnim_style" parent="android:Animation">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="@android:windowEnterAnimation">@anim/dialog_enter</item>  //进入时的动画
+        <item name="@android:windowExitAnimation">@anim/dialog_exit</item>    //退出时的动画
+    </style>
+
 </resources>

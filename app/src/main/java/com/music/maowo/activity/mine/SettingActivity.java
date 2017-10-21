@@ -2,6 +2,8 @@ package com.music.maowo.activity.mine;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -12,6 +14,7 @@ import com.music.maowo.R;
 import com.music.maowo.Utils.DevicesUtils;
 import com.music.maowo.Utils.GlideCacheUtil;
 import com.music.maowo.activity.BaseActivity;
+import com.music.maowo.activity.login.LoginActivity;
 import com.music.maowo.anno.Layout;
 import com.music.maowo.view.SwitchButtonNew;
 
@@ -33,6 +36,8 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
     TextView mCacheSize;
     @BindView(R.id.iv_version)
     TextView mVersion;
+    @BindView(R.id.clear_view)
+    TextView mClearView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,7 +62,19 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
                 break;
             case R.id.iv_clear_cache:
                 GlideCacheUtil.getInstance().clearImageAllCache(this);
-                MyApplication.toast(this, "缓存清理中....请稍候");
+                mClearView.setVisibility(View.VISIBLE);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(2000);
+                            handler.sendEmptyMessage(0);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
                 break;
             case R.id.iv_upgrade:
 
@@ -76,4 +93,20 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
                 break;
         }
     }
+
+    Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what==0) {
+                mClearView.setVisibility(View.GONE);
+                mCacheSize.setText(GlideCacheUtil.getInstance().getCacheSize(SettingActivity.this));
+                MyApplication.toast(SettingActivity.this, "成功");
+            }else {
+                MyApplication.toast(SettingActivity.this, "失败");
+            }
+        }
+
+    };
 }

@@ -1,6 +1,8 @@
 package com.music.maowo.Utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.text.TextUtils;
 
@@ -9,7 +11,12 @@ import com.music.maowo.bean.Music;
 import com.music.maowo.other.AppCache;
 
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Locale;
@@ -156,5 +163,125 @@ public class FileUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public static File createAvatarEmptyFile() {
+        String imageName = System.currentTimeMillis() + ".jpg";
+        String path = getCacheAvatar()+"/"+imageName;
+        createDipPath(path);
+        File f = new File(path);
+        if (!f.exists()) {
+            try {
+                f.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return f;
+    }
+
+    public static void createDipPath(String file) {
+        String parentFile = file.substring(0, file.lastIndexOf("/"));
+        File file1 = new File(file);
+        File parent = new File(parentFile);
+        if (!file1.exists()) {
+            parent.mkdirs();
+            try {
+                file1.createNewFile();
+                Logger.i("FileUtils", "Create new file :" + file);
+            } catch (IOException e) {
+                Logger.e("FileUtils", e.getMessage());
+            }
+        }
+    }
+
+    public static String getCacheAvatar() {
+        String filepath = "/beiwo";
+        return getRootDir() + filepath + "/cache/avatar";
+    }
+
+    public static String getRootDir(){
+        File sdDir = null;
+        //判断sd卡是否存在
+        boolean sdCardExist = Environment.getExternalStorageState()
+                .equals(Environment.MEDIA_MOUNTED);
+        if   (sdCardExist) {
+            //获取根目录
+            sdDir = Environment.getExternalStorageDirectory();
+        }
+        return (sdDir==null) ? "/sdcard" : sdDir.toString();
+    }
+
+    public static Bitmap decodeFileBitmap(File file) {
+        Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+        if(bitmap == null) {
+            byte[] bytes = new byte[(int) (file.length()+1)];
+            FileInputStream in = null;
+            try {
+                in = new FileInputStream(file.getAbsoluteFile());
+                in.read(bytes);
+                bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                if(bitmap == null) file.delete();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return bitmap;
+    }
+
+    /**
+     * 压缩图片
+     *
+     * @param image
+     * @return
+     */
+    public static Bitmap compressImage(Bitmap image, int percent, int size) {
+        if (image == null) {
+            return null;
+        }
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, percent, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+        int options = 100;
+        while (baos.toByteArray().length / 1024 > size) {  //循环判断如果压缩后图片是否大于sizekb,大于继续压缩
+            baos.reset();//重置baos即清空baos
+            image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中
+            options -= 10;//每次都减少10
+        }
+        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中
+        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片
+        return bitmap;
+    }
+
+    public static File saveAvatarBitmap(Bitmap bitmap) {
+        if (bitmap == null) {
+            return null;
+        }
+        String imageName = System.currentTimeMillis() + ".jpg";
+        String path = getCacheAvatar()+"/"+imageName;
+        createDipPath(path);
+        File f = new File(path);
+        if (!f.exists()) {
+            try {
+                f.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            FileOutputStream out = new FileOutputStream(f);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.flush();
+            out.close();
+            Logger.d("保存成功");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Logger.d("saveAvatarBitmap:" + f.getPath());
+        return f;
     }
 }

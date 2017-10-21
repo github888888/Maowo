@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">被窝音乐</string>
     <array name="urls">
-        <item>http://123.59.214.241/static/images/11.jpg</item>
-        <item>http://123.59.214.241/static/images/12.jpg</item>
-        <item>http://123.59.214.241/static/images/13.jpg</item>
-        <item>http://123.59.214.241/static/images/14.jpg</item>
-        <item>http://123.59.214.241/static/images/13.jpg</item>
+        <item>http://123.59.214.241:8000/static/images/11.jpg</item>
+        <item>http://123.59.214.241:8000/static/images/12.jpg</item>
+        <item>http://123.59.214.241:8000/static/images/13.jpg</item>
+        <item>http://123.59.214.241:8000/static/images/14.jpg</item>
+        <item>http://123.59.214.241:8000/static/images/13.jpg</item>
 
     </array>
     <string name="setting_key_mobile_network_play">mobile_network_play</string>

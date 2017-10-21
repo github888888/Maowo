@@ -66,17 +66,20 @@ public class MyMessageListActivity extends BaseActivity {
         list.add(new MessageSummaryInfo(8,images.get(0), "auther8", "愿你开心每一天", "2017-09-08"));
         adapter = new SubmitArticleAdapter();
         lv_content.addHeaderView(new View(this));
+        lv_content.addFooterView(new View(this));
         lv_content.setAdapter(adapter);
         lv_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                gotoChatDetail(i);
+                Viewholder viewholder = (Viewholder) view.getTag();
+                if (viewholder == null) return;
+                MessageSummaryInfo info = viewholder.info;
+                gotoChatDetail(info);
             }
         });
     }
 
-    private void gotoChatDetail(int i) {
-        MessageSummaryInfo info = list.get(i);
+    private void gotoChatDetail(MessageSummaryInfo info) {
         Intent intent = new Intent(this, MyChatDetailActivity.class);
         startActivity(intent);
     }

@@ -1,6 +1,7 @@
 package com.music.maowo.activity;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,7 +91,7 @@ public class MyChatDetailActivity extends BaseActivity {
                 holder = new Viewholder();
                 holder.civ_author_other_show = view.findViewById(R.id.civ_author_other_show);
                 holder.civ_author_mine_show = view.findViewById(R.id.civ_author_mine_show);
-                holder.tv_content = view.findViewById(R.id.tv_content);
+                holder.tv_content = view.findViewById(R.id.tv_chat_content);
                 view.setTag(holder);
             } else {
                 holder = (Viewholder) view.getTag();
@@ -100,7 +101,7 @@ public class MyChatDetailActivity extends BaseActivity {
             if (!TextUtils.isEmpty(info.otherUrl)) {
                 holder.civ_author_mine_show.setVisibility(View.INVISIBLE);
                 holder.civ_author_other_show.setVisibility(View.VISIBLE);
-                holder.tv_content.setBackgroundColor(0xFFEA5959);
+                holder.tv_content.setBackgroundColor(Color.parseColor("#FFEA5959"));
                 final CircleImageView temp_other_civ = holder.civ_author_other_show;
                 temp_other_civ.setTag(info);
                 Glide.with(getApplicationContext()).load(info.otherUrl)
@@ -115,7 +116,8 @@ public class MyChatDetailActivity extends BaseActivity {
             } else {
                 holder.civ_author_mine_show.setVisibility(View.VISIBLE);
                 holder.civ_author_other_show.setVisibility(View.INVISIBLE);
-                holder.tv_content.setBackgroundColor(0xFFFFFFFF);
+
+                holder.tv_content.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
                 final CircleImageView temp_mine_civ = holder.civ_author_other_show;
                 temp_mine_civ.setTag(info);
                 Glide.with(getApplicationContext()).load(info.mingUrl)
