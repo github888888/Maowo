@@ -41,6 +41,7 @@
         <activity android:name=".activity.mine.SettingActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.ArticleDetailActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.PublishTopicActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.ReplyTopicActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.mine.FeedbackActivity" android:screenOrientation="portrait"/>
 
         <activity
