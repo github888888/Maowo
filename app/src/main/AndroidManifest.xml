@@ -22,6 +22,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:hardwareAccelerated="false"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppBaseTheme">
@@ -47,6 +48,7 @@
         <activity android:name=".activity.MyCollectionListActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.SystemMessageListActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.SystemInfoDetailActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.MyChatDetailActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.mine.FeedbackActivity" android:screenOrientation="portrait"/>
 
         <activity

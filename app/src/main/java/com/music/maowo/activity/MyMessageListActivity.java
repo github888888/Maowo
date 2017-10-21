@@ -1,8 +1,10 @@
 package com.music.maowo.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -65,6 +67,18 @@ public class MyMessageListActivity extends BaseActivity {
         adapter = new SubmitArticleAdapter();
         lv_content.addHeaderView(new View(this));
         lv_content.setAdapter(adapter);
+        lv_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                gotoChatDetail(i);
+            }
+        });
+    }
+
+    private void gotoChatDetail(int i) {
+        MessageSummaryInfo info = list.get(i);
+        Intent intent = new Intent(this, MyChatDetailActivity.class);
+        startActivity(intent);
     }
 
     @OnClick({R.id.iv_back,})
@@ -133,7 +147,7 @@ public class MyMessageListActivity extends BaseActivity {
         public MessageSummaryInfo info;
     }
 
-    public class MessageSummaryInfo {
+    public class MessageSummaryInfo implements  Serializable {
         public int chatId;
         public String authorUrl;
         public String authorName;
