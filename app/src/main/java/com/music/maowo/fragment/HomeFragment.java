@@ -55,7 +55,6 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
     @BindView(R.id.rl_article)
     RelativeLayout rl_article;
 
-    private List<String> images;
     private HomeFragmentAdapter adapter;
     private List<HomePageResponse.DataBean.SetListBean> list = new ArrayList<>();
 
@@ -74,7 +73,6 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
         rl_sort.setOnClickListener(this);
         rl_article.setOnClickListener(this);
 
-        images = Arrays.asList(getResources().getStringArray(R.array.urls));
         banner.setOnBannerListener(this);
 
         adapter = new HomeFragmentAdapter(list, getContext());
@@ -117,7 +115,7 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
         if (null == response || null == response.getData()) return;
         if (null == response.getData().getRoll_list() || null == response.getData().getSet_list()) return;
 
-        images.clear();
+        List<String> images = new ArrayList<>();
         for(HomePageResponse.DataBean.RollListBean item :  response.getData().getRoll_list()) {
             images.add(item.getPicture());
         }
