@@ -63,7 +63,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         vp_mainactivity_content.addOnPageChangeListener(this);
         tv_mainactivity_home.setSelected(true);
 
-        // bindService();
+         bindService();
     }
 
     @OnClick({R.id.tv_mainactivity_home, R.id.tv_mainactivity_category,  R.id.tv_mainactivity_mine})
