@@ -53,7 +53,9 @@ public class SystemMessageListActivity extends BaseActivity {
         lv_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                gotoArticleDetailActivity(list.get(i));
+                Viewholder holder = (Viewholder) view.getTag();
+                SystemMessage message = holder.message;
+                gotoArticleDetailActivity(message);
             }
         });
     }
@@ -103,6 +105,7 @@ public class SystemMessageListActivity extends BaseActivity {
                 viewholder = (Viewholder) view.getTag();
             }
             SystemMessage info = getItem(i);
+            viewholder.message = info;
             viewholder.tv_system_message_time.setText(info.time);
             switch (info.type) {
                 case 1:
@@ -129,7 +132,7 @@ public class SystemMessageListActivity extends BaseActivity {
         public TextView tv_system_message_type;
         public TextView tv_system_message_title;
         public TextView tv_system_message_content;
-
+        public SystemMessage message;
     }
 
 
