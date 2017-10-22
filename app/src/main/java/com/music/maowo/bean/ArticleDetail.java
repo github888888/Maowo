@@ -8,10 +8,27 @@ package com.music.maowo.bean;
 
 public class ArticleDetail {
     private String content;
-    private String imageUrl;
+    private String image_url;
     private String avatar;
     private String title;
-    private String nickName;
+    private String nickname;
+
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     public String getContent() {
         return content;
@@ -21,13 +38,6 @@ public class ArticleDetail {
         this.content = content;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 
     public String getAvatar() {
         return avatar;
@@ -45,11 +55,4 @@ public class ArticleDetail {
         this.title = title;
     }
 
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
 }

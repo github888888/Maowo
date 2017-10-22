@@ -9,8 +9,24 @@ import com.music.maowo.bean.ArticleDetail;
 public class ArticleDetailResponse {
 
     private String reason;
-    private int result;
-    private ArticleDetail detail;
+    private int reasult;
+    private ArticleDetail data;
+
+    public int getReasult() {
+        return reasult;
+    }
+
+    public void setReasult(int reasult) {
+        this.reasult = reasult;
+    }
+
+    public ArticleDetail getData() {
+        return data;
+    }
+
+    public void setData(ArticleDetail data) {
+        this.data = data;
+    }
 
     public String getReason() {
         return reason;
@@ -20,19 +36,4 @@ public class ArticleDetailResponse {
         this.reason = reason;
     }
 
-    public int getResult() {
-        return result;
-    }
-
-    public void setResult(int result) {
-        this.result = result;
-    }
-
-    public ArticleDetail getDetail() {
-        return detail;
-    }
-
-    public void setDetail(ArticleDetail detail) {
-        this.detail = detail;
-    }
 }

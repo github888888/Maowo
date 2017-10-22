@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -16,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -25,6 +23,7 @@ import com.music.maowo.Constants;
 import com.music.maowo.R;
 import com.music.maowo.Utils.ToastUtils;
 import com.music.maowo.anno.Layout;
+import com.music.maowo.bean.ArticleDetail;
 import com.music.maowo.bean.CommentInfo;
 import com.music.maowo.bean.Music;
 import com.music.maowo.bean.OnlineMusic;
@@ -34,6 +33,7 @@ import com.music.maowo.net.BaseResult;
 import com.music.maowo.net.CoverLoader;
 import com.music.maowo.net.ObserverWapper;
 import com.music.maowo.net.RetrofitManager;
+import com.music.maowo.net.response.ArticleDetailResponse;
 import com.music.maowo.view.CircleImageView;
 import com.music.maowo.view.CustomListView;
 import com.music.maowo.view.KeyboardRelativeLayout;
@@ -140,20 +140,26 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
             }
         });
 
-        Glide.with(getApplicationContext())
-                .load("http://img.my.csdn.net/uploads/201407/26/1406383242_3127.jpg")
-                .placeholder(R.mipmap.default_cover)
-                .error(R.mipmap.default_cover)
-                .into(iv_background);
-        Glide.with(getApplicationContext()).load("http://img.my.csdn.net/uploads/201407/26/1406383242_9576.jpg")
-                .asBitmap().into(new SimpleTarget<Bitmap>() {
-            @Override
-            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                civ_header.setImageBitmap(resource);
-            }
-        });
+        Observable<ArticleDetailResponse> observable =
+                RetrofitManager.getServices().getArticleDetail(32);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(wapper);
 
-        tv_title.setText("你好明天");
+//        Glide.with(getApplicationContext())
+//                .load("http://img.my.csdn.net/uploads/201407/26/1406383242_3127.jpg")
+//                .placeholder(R.mipmap.default_cover)
+//                .error(R.mipmap.default_cover)
+//                .into(iv_background);
+//        Glide.with(getApplicationContext()).load("http://img.my.csdn.net/uploads/201407/26/1406383242_9576.jpg")
+//                .asBitmap().into(new SimpleTarget<Bitmap>() {
+//            @Override
+//            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+//                civ_header.setImageBitmap(resource);
+//            }
+//        });
+
+//        tv_title.setText("你好明天");
         tv_content.setText("原标题：重磅！中国发现超级金属！飞机火箭上天全靠它！一克价值300元！\n" +
                 "\n" +
                 "　　长期以来航空发动机一直都是我国航空工业中的一个短板。现在，我国部分军用飞机依然使用国外发动机，而在商业航空领域，C-919大型喷气式客机使用的发动机也产自一家美法合资企业。\n" +
@@ -208,6 +214,39 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
         int blue = (int) (blueStart + ((blueEnd - blueStart) * radio + 0.5));
         return Color.argb(255, red, greed, blue);
     }
+
+    ObserverWapper wapper = new ObserverWapper<ArticleDetailResponse>() {
+        @Override
+        public void onNext(ArticleDetailResponse response) {
+            if(response == null || response.getData() == null || response.getReasult() != 1) return;
+            ArticleDetail detail = response.getData();
+            tv_title.setText(detail.getTitle());
+//            tv_content.setText(detail.getContent());
+            Glide.with(getApplicationContext()).load(detail.getAvatar())
+                    .asBitmap().into(new SimpleTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                    civ_header.setImageBitmap(resource);
+                }
+            });
+            Glide.with(getApplicationContext())
+                    .load(detail.getImage_url())
+                    .placeholder(R.mipmap.default_cover)
+                    .error(R.mipmap.default_cover)
+                    .into(iv_background);
+
+        }
+
+        @Override
+        public void onCompleted() {
+            super.onCompleted();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+        }
+    };
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {

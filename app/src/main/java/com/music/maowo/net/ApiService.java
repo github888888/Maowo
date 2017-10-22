@@ -52,6 +52,7 @@ public interface ApiService {
             , @Field("subject_music") String subjectMusic, @Field("token") String token);
 
     //文章详情
+    @FormUrlEncoded
     @POST("file")
-    Observable<ArticleDetailResponse> getArticleDetailResponse(@Field("article_id") int articleid);//article = 32
+    Observable<ArticleDetailResponse> getArticleDetail(@Field("article_id") int articleid);//article = 32
 }

@@ -7,4 +7,5 @@ package com.music.maowo.net.response;
 public class SubmitArticleResponse {
 
 
+
 }
