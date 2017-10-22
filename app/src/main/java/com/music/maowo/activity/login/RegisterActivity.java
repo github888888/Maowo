@@ -1,6 +1,5 @@
 package com.music.maowo.activity.login;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -13,7 +12,7 @@ import com.music.maowo.R;
 import com.music.maowo.activity.BaseActivity;
 import com.music.maowo.anno.Layout;
 import com.music.maowo.net.BaseResult;
-import com.music.maowo.net.LoginAndRegisterResponse;
+import com.music.maowo.net.response.LoginAndRegisterResponse;
 import com.music.maowo.net.ObserverWapper;
 import com.music.maowo.net.RetrofitManager;
 

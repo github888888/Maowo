@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +39,7 @@ public class MineFragment4 extends Fragment implements View.OnClickListener {
     @BindView(R.id.tv_user_name)
     TextView tv_user_name;
     @BindView(R.id.iv_user_setting)
-    ImageView iv_user_setting;
+    LinearLayout iv_user_setting;
     @BindView(R.id.tv_user_edit)
     TextView tv_user_edit;
     @BindView(R.id.tv_submit_article)

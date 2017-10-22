@@ -25,15 +25,21 @@
         android:textColor="@color/c_FFFFFFFF"
         android:textSize="17sp" />
 
-    <ImageView
+    <LinearLayout
         android:id="@+id/iv_user_setting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="11dp"
-        android:layout_marginRight="15dp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/mine_fragment_setting_icon" />
+        android:gravity="center"
+        android:layout_marginRight="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/mine_fragment_setting_icon" />
+
+    </LinearLayout>
+
     <com.music.maowo.view.CircleImageView
         android:id="@+id/civ_header"
         android:layout_below="@id/v_horizontal"

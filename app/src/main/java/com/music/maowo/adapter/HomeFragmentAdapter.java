@@ -1,18 +1,15 @@
 package com.music.maowo.adapter;
 
 import android.content.Context;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.music.maowo.R;
-import com.music.maowo.bean.TopicSummaryInfo;
-import com.music.maowo.net.HomePageResponse;
+import com.music.maowo.net.response.HomePageResponse;
 
 import java.util.List;
 

@@ -2,25 +2,17 @@ package com.music.maowo.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.music.maowo.Constants;
 import com.music.maowo.R;
 import com.music.maowo.adapter.CategoryFragmentAdapter;
-import com.music.maowo.adapter.HomeFragmentAdapter;
 import com.music.maowo.bean.TopicSummaryInfo;
-import com.music.maowo.net.BaseResult;
-import com.music.maowo.net.LoginAndRegisterResponse;
-import com.music.maowo.net.ObserverWapper;
-import com.music.maowo.net.RetrofitManager;
 import com.music.maowo.other.GlideLoader;
-import com.music.maowo.view.CustomGridView;
 import com.music.maowo.view.CustomListView;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
@@ -31,9 +23,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Jay on 2015/8/28 0028.

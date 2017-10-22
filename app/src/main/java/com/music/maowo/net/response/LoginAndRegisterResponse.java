@@ -1,4 +1,4 @@
-package com.music.maowo.net;
+package com.music.maowo.net.response;
 
 import android.widget.ScrollView;
 

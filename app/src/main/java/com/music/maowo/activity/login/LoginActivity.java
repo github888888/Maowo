@@ -21,7 +21,7 @@ import com.music.maowo.Utils.Logger;
 import com.music.maowo.activity.BaseActivity;
 import com.music.maowo.anno.Layout;
 import com.music.maowo.net.BaseResult;
-import com.music.maowo.net.LoginAndRegisterResponse;
+import com.music.maowo.net.response.LoginAndRegisterResponse;
 import com.music.maowo.net.ObserverWapper;
 import com.music.maowo.net.RetrofitManager;
 

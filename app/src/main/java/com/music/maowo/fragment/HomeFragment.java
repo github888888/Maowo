@@ -2,28 +2,22 @@ package com.music.maowo.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.sax.RootElement;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.music.maowo.Constants;
 import com.music.maowo.R;
 import com.music.maowo.activity.HotAndNewArticleActivity;
 import com.music.maowo.activity.MusicAndReadActivity;
 import com.music.maowo.adapter.HomeFragmentAdapter;
-import com.music.maowo.bean.TopicSummaryInfo;
 import com.music.maowo.net.BaseResult;
-import com.music.maowo.net.HomePageResponse;
-import com.music.maowo.net.LoginAndRegisterResponse;
+import com.music.maowo.net.response.HomePageResponse;
+import com.music.maowo.net.response.LoginAndRegisterResponse;
 import com.music.maowo.net.ObserverWapper;
 import com.music.maowo.net.RetrofitManager;
 import com.music.maowo.other.GlideLoader;
@@ -38,7 +32,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
-import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 

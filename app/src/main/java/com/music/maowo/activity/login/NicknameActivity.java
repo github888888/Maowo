@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.RadioButton;
 
 import com.music.maowo.Constants;
 import com.music.maowo.MyApplication;
@@ -16,7 +15,7 @@ import com.music.maowo.activity.BaseActivity;
 import com.music.maowo.activity.MainActivity;
 import com.music.maowo.anno.Layout;
 import com.music.maowo.net.BaseResult;
-import com.music.maowo.net.LoginAndRegisterResponse;
+import com.music.maowo.net.response.LoginAndRegisterResponse;
 import com.music.maowo.net.ObserverWapper;
 import com.music.maowo.net.RetrofitManager;
 
