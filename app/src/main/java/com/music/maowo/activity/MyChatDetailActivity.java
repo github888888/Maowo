@@ -116,7 +116,7 @@ public class MyChatDetailActivity extends BaseActivity {
                 holder.civ_author_mine_show.setVisibility(View.VISIBLE);
                 holder.civ_author_other_show.setVisibility(View.INVISIBLE);
                 holder.tv_content.setBackgroundColor(0xFFFFFFFF);
-                final CircleImageView temp_mine_civ = holder.civ_author_other_show;
+                final CircleImageView temp_mine_civ = holder.civ_author_mine_show;
                 temp_mine_civ.setTag(info);
                 Glide.with(getApplicationContext()).load(info.mingUrl)
                         .asBitmap().into(new SimpleTarget<Bitmap>() {
