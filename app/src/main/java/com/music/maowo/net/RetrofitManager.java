@@ -49,7 +49,7 @@ public class RetrofitManager {
                 public Response intercept(Chain chain) throws IOException {
                     Request request = chain.request();
                     HttpUrl url = request.url().newBuilder()
-                            .addQueryParameter("access_token", Constants.access_token)
+                            .addQueryParameter("token", Constants.access_token + "")
                             .build();
                     request = request.newBuilder().url(url).build();
                     return chain.proceed(request);

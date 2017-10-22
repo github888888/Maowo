@@ -9,5 +9,5 @@ public class Constants {
     public static int screenHeight;
     public static int statusbarHeight;
 
-    public static String access_token;
+    public static int access_token;
 }

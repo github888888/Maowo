@@ -187,7 +187,7 @@ public class LoginActivity extends BaseActivity {
             MyApplication.toast(LoginActivity.this, "result = " + loginAndRegisterResponseBaseResult.data.token);
             if ((loginAndRegisterResponseBaseResult == null || loginAndRegisterResponseBaseResult.data == null || loginAndRegisterResponseBaseResult.data.token == 0)) return;
             int result = loginAndRegisterResponseBaseResult.getReasult();
-            Constants.access_token = String.valueOf(loginAndRegisterResponseBaseResult.data.token);
+            Constants.access_token = loginAndRegisterResponseBaseResult.data.token;
             MyApplication.toast(LoginActivity.this, result == 1 ? "登录成功":"登录失败");
             if (result == 1) {
                 Intent intent = new Intent(LoginActivity.this, NicknameActivity.class);

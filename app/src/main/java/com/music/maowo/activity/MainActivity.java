@@ -122,7 +122,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             MyApplication.toast(this, "再按一次退出被窝音乐");
             mExitTime = System.currentTimeMillis();
         } else {
-            Constants.access_token = "0";
+            Constants.access_token = 0;
             finish();
             System.exit(0);
         }

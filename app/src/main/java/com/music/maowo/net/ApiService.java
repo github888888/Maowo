@@ -22,12 +22,16 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("userupdatepass")
     Observable<BaseResult<LoginAndRegisterResponse>> updatePassword(@Field("old_password") String password
-                ,  @Field("new_password") String newPassword, @Field("token") String token);
+                ,  @Field("new_password") String newPassword, @Field("token") int token);
 
     @FormUrlEncoded
     @POST("userbindnick")
-    Observable<BaseResult<LoginAndRegisterResponse>> bindNickname(@Field("nick_name") String nickName, @Field("token") String token);
+    Observable<BaseResult<LoginAndRegisterResponse>> bindNickname(@Field("nick_name") String nickName, @Field("token") int token);
 
     @POST("home")
     Observable<HomePageResponse> getHomePageInfo();
+
+    @FormUrlEncoded
+    @POST("private_msg")
+    Observable<BaseResult> setPrivateMes(@Field("active_id") int active_id, @Field("passive_id") int passive_id, @Field("message") String message);
 }

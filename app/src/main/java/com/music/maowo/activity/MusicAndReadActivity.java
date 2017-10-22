@@ -6,26 +6,36 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.music.maowo.Constants;
 import com.music.maowo.R;
+import com.music.maowo.Utils.ToastUtils;
 import com.music.maowo.anno.Layout;
 import com.music.maowo.bean.CommentInfo;
 import com.music.maowo.bean.Music;
 import com.music.maowo.bean.OnlineMusic;
 import com.music.maowo.fragment.PlayFragment;
 import com.music.maowo.manager.OnPlayerEventListener;
+import com.music.maowo.net.BaseResult;
 import com.music.maowo.net.CoverLoader;
+import com.music.maowo.net.HomePageResponse;
+import com.music.maowo.net.ObserverWapper;
+import com.music.maowo.net.RetrofitManager;
+import com.music.maowo.other.GlideLoader;
 import com.music.maowo.view.CircleImageView;
 import com.music.maowo.view.CustomListView;
 import com.music.maowo.view.KeyboardRelativeLayout;
@@ -36,6 +46,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -83,6 +96,8 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
     RelativeLayout rl_send_message;
     @BindView(R.id.et_content)
     EditText et_content;
+    @BindView(R.id.cb_private_msg)
+    CheckBox cb_private_msg;
     @BindView(R.id.tv_send)
     TextView tv_send;
 
@@ -97,6 +112,8 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
     private List<CommentInfo> commentList;
 
     private CommentAdapter adapter;
+
+    private boolean isPrivate = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -290,8 +307,44 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
         } else if (v == tv_send) {
             rl_send_message.setVisibility(View.GONE);
             hideKeyboard();
-            commentList.add(new CommentInfo("http://123.59.214.241/static/images/12.jpg", "author2", "2017-08-10", "你好1"));
-            adapter.notifyDataSetChanged();
+
+            isPraise = cb_private_msg.isChecked();
+            if (isPraise) {
+                sendPrivateMsg(et_content.getText().toString());
+            } else {
+                commentList.add(new CommentInfo("http://123.59.214.241/static/images/12.jpg", "author2", "2017-08-10", "你好1"));
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    private void sendPrivateMsg(String s) {
+        Observable<BaseResult> observable = RetrofitManager.getServices().setPrivateMes(Constants.access_token, 9, s);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ObserverWapper<BaseResult>() {
+                    @Override
+                    public void onNext(BaseResult response) {
+                        processDataAndShow(response);
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                        super.onCompleted();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                    }
+                });
+    }
+
+    private void processDataAndShow(BaseResult response) {
+        if (null == response || response.getReasult() != 1) {
+            ToastUtils.show("私信失败");
+        } else {
+            ToastUtils.show("私信成功");
         }
     }
 
