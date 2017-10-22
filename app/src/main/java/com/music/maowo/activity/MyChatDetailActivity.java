@@ -2,6 +2,8 @@ package com.music.maowo.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +15,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.music.maowo.Constants;
 import com.music.maowo.R;
+import com.music.maowo.Utils.ToastUtils;
 import com.music.maowo.anno.Layout;
+import com.music.maowo.net.BaseResult;
+import com.music.maowo.net.ObserverWapper;
+import com.music.maowo.net.RetrofitManager;
 import com.music.maowo.view.CircleImageView;
 
 import java.util.ArrayList;
@@ -23,6 +30,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 2017-10-17 0017.
@@ -57,6 +67,8 @@ public class MyChatDetailActivity extends BaseActivity {
         list.add(new ChatInfo(images.get(0), null, "你好"));
         adapter = new ChatAdapter();
         lv_content.setAdapter(adapter);
+
+        handler.sendEmptyMessage(0);
     }
 
     @OnClick({R.id.iv_back,})
@@ -64,6 +76,42 @@ public class MyChatDetailActivity extends BaseActivity {
         if (view == iv_back) {
             finish();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeMessages(0);
+    }
+
+    private Handler handler = new Handler()  {
+        @Override
+        public void handleMessage(Message msg) {
+            getMessageData();
+            sendEmptyMessageDelayed(0, 3000);
+        }
+    };
+
+    private void getMessageData() {
+        Observable<BaseResult> observable = RetrofitManager.getServices().private_roll(Constants.access_token);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ObserverWapper<BaseResult>() {
+                    @Override
+                    public void onNext(BaseResult response) {
+                        ToastUtils.show("refresh...");
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                        super.onCompleted();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                    }
+                });
     }
 
     private class ChatAdapter extends BaseAdapter {

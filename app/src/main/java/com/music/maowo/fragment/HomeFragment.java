@@ -114,6 +114,7 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
         }
         banner.setImages(images).setImageLoader(new GlideLoader()).start();
 
+        list.clear();
         list.addAll(response.getData().getSet_list());
         adapter.notifyDataSetChanged();
 

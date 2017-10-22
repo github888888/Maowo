@@ -39,6 +39,14 @@ public interface ApiService {
     @POST("private_msg")
     Observable<BaseResult> setPrivateMes(@Field("active_id") int active_id, @Field("passive_id") int passive_id, @Field("message") String message);
 
+    @FormUrlEncoded
+    @POST("comment_msg")
+    Observable<BaseResult> sendComment(@Field("token") int token, @Field("article_id") int article_id, @Field("comment") String comment);
+
+    @FormUrlEncoded
+    @POST("comment_msg")
+    Observable<BaseResult> private_roll(@Field("token") int token);
+
     @POST("user_add_file")
     Observable<SubmitArticleResponse> submitArticle(@Field("file_name") String fileName, @Field("file_body") String fileBody, @Field("file_type") String fileType
             , @Field("subject_music") String subjectMusic, @Field("token") String token);

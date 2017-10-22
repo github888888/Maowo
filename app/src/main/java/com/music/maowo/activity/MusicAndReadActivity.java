@@ -32,10 +32,8 @@ import com.music.maowo.fragment.PlayFragment;
 import com.music.maowo.manager.OnPlayerEventListener;
 import com.music.maowo.net.BaseResult;
 import com.music.maowo.net.CoverLoader;
-import com.music.maowo.net.HomePageResponse;
 import com.music.maowo.net.ObserverWapper;
 import com.music.maowo.net.RetrofitManager;
-import com.music.maowo.other.GlideLoader;
 import com.music.maowo.view.CircleImageView;
 import com.music.maowo.view.CustomListView;
 import com.music.maowo.view.KeyboardRelativeLayout;
@@ -312,10 +310,33 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
             if (isPraise) {
                 sendPrivateMsg(et_content.getText().toString());
             } else {
-                commentList.add(new CommentInfo("http://123.59.214.241/static/images/12.jpg", "author2", "2017-08-10", "你好1"));
-                adapter.notifyDataSetChanged();
+                sendCommentMessage(et_content.getText().toString());
             }
         }
+    }
+
+    private void sendCommentMessage(final String s) {
+        Observable<BaseResult> observable = RetrofitManager.getServices().sendComment(9, 32, s);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ObserverWapper<BaseResult>() {
+                    @Override
+                    public void onNext(BaseResult response) {
+                        processDataAndShow(response);
+                        commentList.add(new CommentInfo("http://123.59.214.241:8000/static/images/12.jpg", "author2", "2017-08-10", s));
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                        super.onCompleted();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                    }
+                });
     }
 
     private void sendPrivateMsg(String s) {
@@ -342,9 +363,9 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
 
     private void processDataAndShow(BaseResult response) {
         if (null == response || response.getReasult() != 1) {
-            ToastUtils.show("私信失败");
+            ToastUtils.show(isPrivate ? "私信失败" : "评论失败");
         } else {
-            ToastUtils.show("私信成功");
+            ToastUtils.show(isPrivate ? "私信成功" : "评论成功");
         }
     }
 

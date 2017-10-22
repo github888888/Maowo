@@ -70,15 +70,15 @@ public class HomePageResponse {
 
             private String picture;
             private int id;
-            private String title;
+            private String titile;
             private String description;
 
             public String getTitle() {
-                return title;
+                return titile;
             }
 
             public void setTitle(String title) {
-                this.title = title;
+                this.titile = title;
             }
 
             public String getDescription() {
