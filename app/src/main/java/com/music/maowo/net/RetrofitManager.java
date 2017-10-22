@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetrofitManager {
-    public static final String BASE_URL = "http://123.59.214.241:80/";
+    public static final String BASE_URL = "http://123.59.214.241:8000/";
     private static RetrofitManager sInstance;
     private Retrofit retrofit;
     private ApiService service;

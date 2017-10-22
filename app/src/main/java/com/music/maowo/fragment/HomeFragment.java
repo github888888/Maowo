@@ -22,6 +22,7 @@ import com.music.maowo.activity.MusicAndReadActivity;
 import com.music.maowo.adapter.HomeFragmentAdapter;
 import com.music.maowo.bean.TopicSummaryInfo;
 import com.music.maowo.net.BaseResult;
+import com.music.maowo.net.HomePageResponse;
 import com.music.maowo.net.LoginAndRegisterResponse;
 import com.music.maowo.net.ObserverWapper;
 import com.music.maowo.net.RetrofitManager;
@@ -37,6 +38,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
+import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -55,6 +57,7 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
 
     private List<String> images;
     private HomeFragmentAdapter adapter;
+    private List<HomePageResponse.DataBean.SetListBean> list = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,16 +76,7 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
 
         images = Arrays.asList(getResources().getStringArray(R.array.urls));
         banner.setOnBannerListener(this);
-        // TODO 从服务端获取数据
-        banner.setImages(images).setImageLoader(new GlideLoader()).start();
 
-
-        List<TopicSummaryInfo> list = new ArrayList<>();
-        list.add(new TopicSummaryInfo("nusicUrl", images.get(0), "title1", "description1"));
-        list.add(new TopicSummaryInfo("nusicUrl", images.get(1), "title2", "description2"));
-        list.add(new TopicSummaryInfo("nusicUrl", images.get(2), "title3", "description3"));
-        list.add(new TopicSummaryInfo("nusicUrl", images.get(3), "title4", "description4"));
-        list.add(new TopicSummaryInfo("nusicUrl", images.get(4), "title5", "description5"));
         adapter = new HomeFragmentAdapter(list, getContext());
         gv_content.setAdapter(adapter);
         gv_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -93,9 +87,48 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
                 gotoDetailActivity(holder.info);
             }
         });
+
+        getData();
     }
 
-    private void gotoDetailActivity(TopicSummaryInfo info) {
+    private void getData(){
+        Observable<HomePageResponse> observer = RetrofitManager.getServices().getHomePageInfo();
+        observer.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ObserverWapper<HomePageResponse>() {
+                    @Override
+                    public void onNext(HomePageResponse response) {
+                       processDataAndShow(response);
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                        super.onCompleted();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                    }
+                });
+    }
+
+    private void processDataAndShow(HomePageResponse response) {
+        if (null == response || null == response.getData()) return;
+        if (null == response.getData().getRoll_list() || null == response.getData().getSet_list()) return;
+
+        images.clear();
+        for(HomePageResponse.DataBean.RollListBean item :  response.getData().getRoll_list()) {
+            images.add(item.getPicture());
+        }
+        banner.setImages(images).setImageLoader(new GlideLoader()).start();
+
+        list.addAll(response.getData().getSet_list());
+        adapter.notifyDataSetChanged();
+
+    }
+
+    private void gotoDetailActivity(HomePageResponse.DataBean.SetListBean info) {
         Intent intent = new Intent(getActivity(), MusicAndReadActivity.class);
         startActivity(intent);
     }

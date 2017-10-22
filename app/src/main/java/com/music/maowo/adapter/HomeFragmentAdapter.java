@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.music.maowo.R;
 import com.music.maowo.bean.TopicSummaryInfo;
+import com.music.maowo.net.HomePageResponse;
 
 import java.util.List;
 
@@ -20,10 +21,10 @@ import java.util.List;
  */
 
 public class HomeFragmentAdapter extends BaseAdapter {
-    private List<TopicSummaryInfo> list;
+    private List<HomePageResponse.DataBean.SetListBean> list;
     private Context context;
 
-    public HomeFragmentAdapter(List<TopicSummaryInfo> list, Context context) {
+    public HomeFragmentAdapter(List<HomePageResponse.DataBean.SetListBean> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -34,7 +35,7 @@ public class HomeFragmentAdapter extends BaseAdapter {
     }
 
     @Override
-    public TopicSummaryInfo getItem(int i) {
+    public HomePageResponse.DataBean.SetListBean getItem(int i) {
         return list.get(i);
     }
 
@@ -56,10 +57,10 @@ public class HomeFragmentAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        TopicSummaryInfo info = list.get(i);
-        Glide.with(context).load(info.imgUrl).into(holder.iv_show);
-        holder.tv_title.setText(info.title);
-        holder.tv_description.setText(info.description);
+        HomePageResponse.DataBean.SetListBean info = list.get(i);
+        Glide.with(context).load(info.getPicture()).into(holder.iv_show);
+        holder.tv_title.setText(info.getTitle());
+        holder.tv_description.setText(info.getDescription());
         holder.info = info;
         return convertView;
     }
@@ -68,6 +69,6 @@ public class HomeFragmentAdapter extends BaseAdapter {
         public ImageView iv_show;
         public TextView tv_title;
         public TextView tv_description;
-        public TopicSummaryInfo info;
+        public HomePageResponse.DataBean.SetListBean info;
     }
 }

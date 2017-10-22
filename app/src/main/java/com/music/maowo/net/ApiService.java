@@ -4,6 +4,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import rx.Observable;
+import rx.Observer;
 
 /**
  * Created by Administrator on 2017-9-16 0016.
@@ -26,4 +27,7 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("userbindnick")
     Observable<BaseResult<LoginAndRegisterResponse>> bindNickname(@Field("nick_name") String nickName, @Field("token") String token);
+
+    @POST("home")
+    Observable<HomePageResponse> getHomePageInfo();
 }
