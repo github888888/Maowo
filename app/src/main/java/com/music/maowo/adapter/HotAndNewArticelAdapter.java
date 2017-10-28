@@ -1,6 +1,7 @@
 package com.music.maowo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.music.maowo.R;
+import com.music.maowo.activity.MusicAndReadActivity;
 import com.music.maowo.bean.TopicSummaryInfo;
 import com.music.maowo.view.CircleImageView;
 
@@ -62,7 +64,7 @@ public class HotAndNewArticelAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        TopicSummaryInfo info = list.get(i);
+        final TopicSummaryInfo info = list.get(i);
         Glide.with(context).load(info.imgUrl).into(holder.iv_show);
         holder.tv_title.setText(info.title);
         holder.tv_reply_count.setText("" + info.reply_count);
@@ -81,6 +83,14 @@ public class HotAndNewArticelAdapter extends BaseAdapter {
         });
         holder.tv_author.setText(info.author);
         holder.info = info;
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, MusicAndReadActivity.class);
+                intent.putExtra("article_id", info.article_id);
+                context.startActivity(intent);
+            }
+        });
         return convertView;
     }
 

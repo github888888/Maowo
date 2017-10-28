@@ -1,5 +1,6 @@
 package com.music.maowo.net;
 
+import com.music.maowo.bean.SetListResponse;
 import com.music.maowo.net.response.ArticleDetailResponse;
 import com.music.maowo.net.response.HomePageResponse;
 import com.music.maowo.net.response.LoginAndRegisterResponse;
@@ -47,12 +48,17 @@ public interface ApiService {
     @POST("comment_msg")
     Observable<BaseResult> private_roll(@Field("token") int token);
 
+    @FormUrlEncoded
     @POST("user_add_file")
-    Observable<SubmitArticleResponse> submitArticle(@Field("file_name") String fileName, @Field("file_body") String fileBody, @Field("file_type") String fileType
-            , @Field("subject_music") String subjectMusic, @Field("token") String token);
+    Observable<BaseResult> submitArticle(@Field("file_name") String fileName, @Field("file_body") String fileBody, @Field("file_type") String fileType
+            , @Field("subject_music") String subjectMusic, @Field("token") int token);
 
     //文章详情
     @FormUrlEncoded
     @POST("file")
     Observable<ArticleDetailResponse> getArticleDetail(@Field("article_id") int articleid);//article = 32
+
+    @FormUrlEncoded
+    @POST("set_article_list")
+    Observable<SetListResponse> getSetArticleList(@Field("set_id") int set_id);;
 }

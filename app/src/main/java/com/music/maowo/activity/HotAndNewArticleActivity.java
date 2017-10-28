@@ -9,7 +9,10 @@ import android.widget.TextView;
 import com.music.maowo.R;
 import com.music.maowo.adapter.HotAndNewArticelAdapter;
 import com.music.maowo.anno.Layout;
+import com.music.maowo.bean.SetListResponse;
 import com.music.maowo.bean.TopicSummaryInfo;
+import com.music.maowo.net.ObserverWapper;
+import com.music.maowo.net.RetrofitManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +20,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 2017-10-8 0008.
@@ -48,15 +54,22 @@ public class HotAndNewArticleActivity extends BaseActivity {
         tv_tttle.setText(currentType == TYPE_HOT ? "热门排行榜" : "最新文章");
         tv_indicator.setText("文章分类");
 
-        images = Arrays.asList(getResources().getStringArray(R.array.urls));
-        List<TopicSummaryInfo> list = new ArrayList<>();
-        list.add(new TopicSummaryInfo("nusicUrl", images.get(0), "title1", "description1", 1, 2, "author1", images.get(4), true));
-        list.add(new TopicSummaryInfo("nusicUrl", images.get(1), "title2", "description2", 2, 4,  "author2", images.get(3),false));
-        list.add(new TopicSummaryInfo("nusicUrl", images.get(2), "title3", "description3", 3, 6,  "author3", images.get(2),false));
-        list.add(new TopicSummaryInfo("nusicUrl", images.get(3), "title4", "description4", 4, 8,  "author4", images.get(1),true));
-        list.add(new TopicSummaryInfo("nusicUrl", images.get(4), "title5", "description5", 5, 10,  "author5", images.get(0),false));
-        adapter = new HotAndNewArticelAdapter(list ,this);
-        lv_content.setAdapter(adapter);
+        gotoRequestData();
+    }
+
+    private void gotoRequestData() {
+        Observable<SetListResponse> observable = RetrofitManager.getServices().getSetArticleList(1);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ObserverWapper<SetListResponse>(){
+                    @Override
+                    public void onNext(SetListResponse o) {
+                        if (o == null || o.getData() == null) return;
+                        if (o.getData().getFile() == null || o.getData().getFile().size() == 0) return;
+                        adapter = new HotAndNewArticelAdapter(o.getData().getFile(), HotAndNewArticleActivity.this);
+                        lv_content.setAdapter(adapter);
+                    }
+                });
     }
 
     @OnClick({R.id.iv_back,})

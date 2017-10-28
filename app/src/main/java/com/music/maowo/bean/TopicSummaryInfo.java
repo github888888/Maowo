@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 
 public class TopicSummaryInfo implements Serializable {
+    public int article_id; // 文章id
     public String musicUrl; // 音乐url
     public String imgUrl;   // 图片url
     public String title;    // 文章标题
