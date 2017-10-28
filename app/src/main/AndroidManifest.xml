@@ -50,6 +50,7 @@
         <activity android:name=".activity.SystemInfoDetailActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.MyChatDetailActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activity.mine.FeedbackActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".activity.AddArticleActivity" android:screenOrientation="portrait"/>
 
         <activity
             android:name="com.mob.tools.MobUIShell"

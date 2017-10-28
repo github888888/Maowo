@@ -1,6 +1,7 @@
 package com.music.maowo.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -99,6 +100,9 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
     @BindView(R.id.tv_send)
     TextView tv_send;
 
+    @BindView(R.id.iv_add_article)
+    ImageView iv_add_article;
+
 
     private int position;
     private OnlineMusic onlineMusic;
@@ -188,15 +192,10 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
                 "　　朱俊强：我们一千公斤级的发动机，它的高压转速都在三万多转接近四万转，大概的切向速度就是每秒种450米左右，温度大概是1720多度。");
 
         commentList = new ArrayList<>();
-//         <item></item>
-//        <item>http://123.59.214.241/static/images/12.jpg</item>
-//        <item>http://123.59.214.241/static/images/13.jpg</item>
-//        <item>http://123.59.214.241/static/images/14.jpg</item>
-//        <item>http://123.59.214.241/static/images/13.jpg</item>
-        commentList.add(new CommentInfo("http://123.59.214.241/static/images/11.jpg", "author1", "2017-08-09", "你好"));
-        commentList.add(new CommentInfo("http://123.59.214.241/static/images/12.jpg", "author2", "2017-08-10", "你好1"));
-        commentList.add(new CommentInfo("http://123.59.214.241/static/images/13.jpg", "author3", "2017-08-11", "你好2"));
-        commentList.add(new CommentInfo("http://123.59.214.241/static/images/14.jpg", "author4", "2017-08-12", "你好3"));
+        commentList.add(new CommentInfo("http://123.59.214.241:8000/static/images/11.jpg", "author1", "2017-08-09", "你好"));
+        commentList.add(new CommentInfo("http://123.59.214.241:8000/static/images/12.jpg", "author2", "2017-08-10", "你好1"));
+        commentList.add(new CommentInfo("http://123.59.214.241:8000/static/images/13.jpg", "author3", "2017-08-11", "你好2"));
+        commentList.add(new CommentInfo("http://123.59.214.241:8000/static/images/14.jpg", "author4", "2017-08-12", "你好3"));
         adapter = new CommentAdapter();
         lv_content.setAdapter(adapter);
     }
@@ -265,6 +264,7 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
         iv_msg.setOnClickListener(this);
         tv_send.setOnClickListener(this);
         iv_share.setOnClickListener(this);
+        iv_add_article.setOnClickListener(this);
     }
 
     @Override
@@ -351,6 +351,9 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
             } else {
                 sendCommentMessage(et_content.getText().toString());
             }
+        } else if (v == iv_add_article) {
+            Intent intent = new Intent(this, AddArticleActivity.class);
+            startActivity(intent);
         }
     }
 
