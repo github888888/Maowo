@@ -22,8 +22,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.music.maowo.Constants;
+import com.music.maowo.PreferenceConfig;
 import com.music.maowo.R;
+import com.music.maowo.Utils.SharedPreferencesUtils;
 import com.music.maowo.Utils.ToastUtils;
+import com.music.maowo.activity.login.LoginActivity;
 import com.music.maowo.anno.Layout;
 import com.music.maowo.bean.ArticleDetail;
 import com.music.maowo.bean.CommentInfo;
@@ -291,21 +294,43 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
 
     @Override
     public void onClick(View v) {
+        Intent intent;
+        boolean isLogin = SharedPreferencesUtils.getIsLogin(this, PreferenceConfig.LOGIN, false);
         if (v == iv_play_bar_play) {
             getPlayService().playPause();
         } else if (v == rl_music_container) {
             showPlayingFragment();
         } else if (v == iv_share) {
-            showShare();
+            if (isLogin) {
+                showShare();
+            } else {
+                intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+            }
         } else if (v == iv_favour) {
-            isFavor ^= true;
-            iv_favour.setSelected(isFavor);
+            if (isLogin) {
+                isFavor ^= true;
+                iv_favour.setSelected(isFavor);
+            } else {
+                intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+            }
         } else if (v == iv_praise) {
-            isPraise ^= true;
-            iv_praise.setSelected(isPraise);
+            if (isLogin) {
+                isPraise ^= true;
+                iv_praise.setSelected(isPraise);
+            } else {
+                intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+            }
         } else if (v == iv_msg) {
-            rl_send_message.setVisibility(View.VISIBLE);
-            showKeyboard();
+            if (isLogin) {
+                rl_send_message.setVisibility(View.VISIBLE);
+                showKeyboard();
+            } else {
+                intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+            }
         } else if (v == tv_send) {
             rl_send_message.setVisibility(View.GONE);
             hideKeyboard();

@@ -1,6 +1,5 @@
 package com.music.maowo.net;
 
-import com.music.maowo.bean.CategoryResponse;
 import com.music.maowo.bean.SetListResponse;
 import com.music.maowo.net.response.ArticleDetailResponse;
 import com.music.maowo.net.response.HomePageResponse;
@@ -72,4 +71,25 @@ public interface ApiService {
     @POST("newestfile")
     Observable<SetListResponse> getNewstFile();
 
+    Observable<SetListResponse> getSetArticleList(@Field("set_id") int set_id);;
+
+    //提交个人信息
+    @FormUrlEncoded
+    @POST("submit_my_information")
+    Observable<BaseResult> submitUserInfo(@Field("avater") String avatar, @Field("gender") String gender
+            , @Field("nickname") String nickName, @Field("age") String age, @Field("token") int token);
+
+    //获取个人信息
+    @FormUrlEncoded
+    @POST("view_my_information")
+    Observable<UserInfoResponse> getUserInfo(@Field("token") int token);
+
+    //获取提交的文章
+    @FormUrlEncoded
+    @POST("get_article_submit")
+    Observable<SubmitArticleResponse> getArticleSubmit(@Field("token") int token);
+
+    @FormUrlEncoded
+    @POST("get_article_submit")
+    String articleSubmit(@Field("token") int token);
 }
