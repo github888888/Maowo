@@ -26,7 +26,6 @@ import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -75,7 +74,7 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 HomeFragmentAdapter.ViewHolder holder = (HomeFragmentAdapter.ViewHolder) view.getTag();
                 if (null == holder || null == holder.info) return;
-                gotoDetailActivity(holder.info);
+                gotoHotAndNewActivity(holder.info);
             }
         });
 
@@ -120,8 +119,9 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
 
     }
 
-    private void gotoDetailActivity(HomePageResponse.DataBean.SetListBean info) {
-        Intent intent = new Intent(getActivity(), MusicAndReadActivity.class);
+    private void gotoHotAndNewActivity(HomePageResponse.DataBean.SetListBean info) {
+        Intent intent = new Intent(getActivity(), HotAndNewArticleActivity.class);
+        intent.putExtra(HotAndNewArticleActivity.TYPE_SELECTED, info.getSet_id());
         startActivity(intent);
     }
 
@@ -153,11 +153,11 @@ public class HomeFragment extends Fragment implements OnBannerListener, View.OnC
     public void onClick(View view) {
         if (view == rl_sort) {
             Intent intent = new Intent(getActivity(), HotAndNewArticleActivity.class);
-            intent.putExtra(HotAndNewArticleActivity.TYPE_SELECTED, HotAndNewArticleActivity.TYPE_NEW);
+            intent.putExtra(HotAndNewArticleActivity.TYPE_SELECTED, HotAndNewArticleActivity.TYPE_HOT);
             startActivity(intent);
         } else if (view == rl_article) {
             Intent intent = new Intent(getActivity(), HotAndNewArticleActivity.class);
-            intent.putExtra(HotAndNewArticleActivity.TYPE_SELECTED, HotAndNewArticleActivity.TYPE_HOT);
+            intent.putExtra(HotAndNewArticleActivity.TYPE_SELECTED, HotAndNewArticleActivity.TYPE_NEW);
             startActivity(intent);
         }
     }

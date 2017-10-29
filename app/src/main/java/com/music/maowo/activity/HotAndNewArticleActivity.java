@@ -31,8 +31,8 @@ import rx.schedulers.Schedulers;
 @Layout(R.layout.activity_hot_and_new_layotu)
 public class HotAndNewArticleActivity extends BaseActivity {
     public static final String TYPE_SELECTED = "type_selected";
-    public static final int TYPE_HOT = 1; // 热门文章
-    public static final int TYPE_NEW = 2; // 最新文章
+    public static final int TYPE_HOT = -1; // 热门文章
+    public static final int TYPE_NEW = -2; // 最新文章
 
     @BindView(R.id.tv_tttle)
     TextView tv_tttle;
@@ -51,14 +51,27 @@ public class HotAndNewArticleActivity extends BaseActivity {
     protected void initDataAndListener() {
         Intent intent = getIntent();
         currentType = intent.getIntExtra(TYPE_SELECTED, TYPE_HOT);
-        tv_tttle.setText(currentType == TYPE_HOT ? "热门排行榜" : "最新文章");
-        tv_indicator.setText("文章分类");
+        if (currentType == TYPE_HOT || currentType == TYPE_NEW) {
+            tv_tttle.setText(currentType == TYPE_HOT ? "热门排行榜" : "最新文章");
+            tv_indicator.setVisibility(View.VISIBLE);
+            tv_indicator.setText("文章分类");
+        } else {
+            tv_tttle.setText("被窝合辑");
+            tv_indicator.setVisibility(View.GONE);
+        }
 
         gotoRequestData();
     }
 
     private void gotoRequestData() {
-        Observable<SetListResponse> observable = RetrofitManager.getServices().getSetArticleList(1);
+        Observable<SetListResponse> observable;
+        if (currentType == TYPE_HOT) {
+            observable = RetrofitManager.getServices().getHotFile();
+        } else if (currentType == TYPE_NEW) {
+            observable = RetrofitManager.getServices().getNewstFile();
+        } else {
+            observable = RetrofitManager.getServices().getSetArticleList(currentType);
+        }
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new ObserverWapper<SetListResponse>(){

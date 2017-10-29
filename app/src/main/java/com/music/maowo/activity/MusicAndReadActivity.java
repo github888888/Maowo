@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -157,14 +158,6 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(wapper);
-
-        commentList = new ArrayList<>();
-        commentList.add(new CommentInfo("http://123.59.214.241:8000/static/images/11.jpg", "author1", "2017-08-09", "你好"));
-        commentList.add(new CommentInfo("http://123.59.214.241:8000/static/images/12.jpg", "author2", "2017-08-10", "你好1"));
-        commentList.add(new CommentInfo("http://123.59.214.241:8000/static/images/13.jpg", "author3", "2017-08-11", "你好2"));
-        commentList.add(new CommentInfo("http://123.59.214.241:8000/static/images/14.jpg", "author4", "2017-08-12", "你好3"));
-        adapter = new CommentAdapter();
-        lv_content.setAdapter(adapter);
     }
 
     public int getColorFrom(int startColor, int endColor, float radio) {
@@ -187,7 +180,10 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
             if(response == null || response.getData() == null || response.getReasult() != 1) return;
             ArticleDetail detail = response.getData();
             tv_title.setText(detail.getTitle());
+            Typeface typeface = Typeface.createFromAsset(getAssets(),"TTTongSongJ.ttf");
+            tv_content.setTypeface(typeface);
             tv_content.setText(detail.getContent());
+            tv_content.append("我是高手");
             Glide.with(getApplicationContext()).load(detail.getAvatar())
                     .asBitmap().into(new SimpleTarget<Bitmap>() {
                 @Override
@@ -200,7 +196,9 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
                     .placeholder(R.mipmap.default_cover)
                     .error(R.mipmap.default_cover)
                     .into(iv_background);
-
+            commentList = response.getData().getComment();
+            adapter = new CommentAdapter();
+            lv_content.setAdapter(adapter);
         }
 
         @Override
@@ -325,7 +323,7 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
     }
 
     private void sendCommentMessage(final String s) {
-        Observable<BaseResult> observable = RetrofitManager.getServices().sendComment(9, 32, s);
+        Observable<BaseResult> observable = RetrofitManager.getServices().sendComment(9, articleId, s);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new ObserverWapper<BaseResult>() {
@@ -442,7 +440,7 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
 
         @Override
         public int getCount() {
-            return commentList.size();
+            return null == commentList ? 0 : commentList.size();
         }
 
         @Override
@@ -472,7 +470,7 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
             CommentInfo info = getItem(i);
             final CircleImageView temp_civ = holder.civ_header;
             temp_civ.setTag(info);
-            Glide.with(getApplicationContext()).load(info.authorUrl)
+            Glide.with(getApplicationContext()).load(info.avatar)
                     .asBitmap().into(new SimpleTarget<Bitmap>() {
                 @Override
                 public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
@@ -481,10 +479,18 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
                     temp_civ.setImageBitmap(resource);
                 }
             });
-            holder.tv_author_name.setText(info.authorName);
+            holder.tv_author_name.setText(info.nickname);
             holder.tv_post_time.setText(info.postTime);
-            holder.tv_post_content.setText(info.postContent);
+            holder.tv_post_content.setText(info.comment_body);
             holder.info = info;
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    isPraise = true;
+                    cb_private_msg.setChecked(true);
+                    showKeyboard();
+                }
+            });
             return view;
         }
     }

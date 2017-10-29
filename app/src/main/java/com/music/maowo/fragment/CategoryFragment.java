@@ -11,7 +11,11 @@ import android.widget.Toast;
 import com.music.maowo.Constants;
 import com.music.maowo.R;
 import com.music.maowo.adapter.CategoryFragmentAdapter;
+import com.music.maowo.bean.CategoryResponse;
 import com.music.maowo.bean.TopicSummaryInfo;
+import com.music.maowo.net.ObserverWapper;
+import com.music.maowo.net.RetrofitManager;
+import com.music.maowo.net.response.HomePageResponse;
 import com.music.maowo.other.GlideLoader;
 import com.music.maowo.view.CustomListView;
 import com.youth.banner.Banner;
@@ -23,6 +27,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Jay on 2015/8/28 0028.
@@ -32,9 +39,8 @@ public class CategoryFragment extends Fragment implements OnBannerListener {
     CustomListView lv_content;
     @BindView(R.id.banner)
     Banner banner;
-
-    private List<String> images;
     private CategoryFragmentAdapter adapter;
+    private List<CategoryResponse.DataBean.CateListBean> list;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,20 +53,37 @@ public class CategoryFragment extends Fragment implements OnBannerListener {
     private void init() {
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(Constants.screenWidth, Constants.screenWidth / 2);
         banner.setLayoutParams(params);
+        list = new ArrayList<>();
+        getCategoryData();
+    }
 
-        images = Arrays.asList(getResources().getStringArray(R.array.urls));
-        banner.setOnBannerListener(this);
-        // TODO 从服务端获取数据
+    private void getCategoryData() {
+        Observable<CategoryResponse> observable = RetrofitManager.getServices().getCategoryListInfo();
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ObserverWapper<CategoryResponse>(){
+                    @Override
+                    public void onNext(CategoryResponse o) {
+                        processData(o);
+                    }
+                });
+    }
+
+    private void processData(CategoryResponse response) {
+        if (null == response || null == response.getData()) return;
+        if (null == response.getData().getRoll_list() || null == response.getData().getCate_list()) return;
+
+        List<String> images = new ArrayList<>();
+        for(CategoryResponse.DataBean.RollListBean item :  response.getData().getRoll_list()) {
+            images.add(item.getPicture());
+        }
         banner.setImages(images).setImageLoader(new GlideLoader()).start();
 
-        List<TopicSummaryInfo> list = new ArrayList<>();
-        list.add(new TopicSummaryInfo("nusicUrl", images.get(0), "title1", "description1", 1, 2, true));
-        list.add(new TopicSummaryInfo("nusicUrl", images.get(1), "title2", "description2", 2, 4, false));
-        list.add(new TopicSummaryInfo("nusicUrl", images.get(2), "title3", "description3", 3, 6, false));
-        list.add(new TopicSummaryInfo("nusicUrl", images.get(3), "title4", "description4", 4, 8, true));
-        list.add(new TopicSummaryInfo("nusicUrl", images.get(4), "title5", "description5", 5, 10, false));
+        list.clear();
+        list.addAll(response.getData().getCate_list());
         adapter = new CategoryFragmentAdapter(list, getContext());
         lv_content.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

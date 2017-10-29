@@ -1,6 +1,7 @@
 package com.music.maowo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,7 +10,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.music.maowo.R;
-import com.music.maowo.bean.TopicSummaryInfo;
+import com.music.maowo.activity.HotAndNewArticleActivity;
+import com.music.maowo.bean.CategoryResponse;
 
 import java.util.List;
 
@@ -18,10 +20,10 @@ import java.util.List;
  */
 
 public class CategoryFragmentAdapter extends BaseAdapter {
-    private List<TopicSummaryInfo> list;
+    private List<CategoryResponse.DataBean.CateListBean> list;
     private Context context;
 
-    public CategoryFragmentAdapter(List<TopicSummaryInfo> list, Context context) {
+    public CategoryFragmentAdapter(List<CategoryResponse.DataBean.CateListBean> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -32,7 +34,7 @@ public class CategoryFragmentAdapter extends BaseAdapter {
     }
 
     @Override
-    public TopicSummaryInfo getItem(int i) {
+    public CategoryResponse.DataBean.CateListBean getItem(int i) {
         return list.get(i);
     }
 
@@ -56,14 +58,21 @@ public class CategoryFragmentAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        TopicSummaryInfo info = list.get(i);
-        Glide.with(context).load(info.imgUrl).into(holder.iv_show);
-        holder.tv_title.setText(info.title);
-        holder.tv_reply_count.setText("" + info.reply_count);
-        holder.tv_praise_count.setText("" + info.praise_count);
-        holder.tv_praise_count.setSelected(info.isPraiseByMe);
-        holder.tv_description.setText(info.description);
+        final CategoryResponse.DataBean.CateListBean info = list.get(i);
+        Glide.with(context).load(info.getPicture()).into(holder.iv_show);
+        holder.tv_title.setText(info.getTitile());
+        holder.tv_reply_count.setText("0");
+        holder.tv_praise_count.setText("0");
+        holder.tv_description.setText(info.getDescription());
         holder.info = info;
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, HotAndNewArticleActivity.class);
+                intent.putExtra(HotAndNewArticleActivity.TYPE_SELECTED, info.getCate_id());
+                context.startActivity(intent);
+            }
+        });
         return convertView;
     }
 
@@ -73,6 +82,6 @@ public class CategoryFragmentAdapter extends BaseAdapter {
         public TextView tv_reply_count;
         public TextView tv_praise_count;
         public TextView tv_description;
-        public TopicSummaryInfo info;
+        public CategoryResponse.DataBean.CateListBean info;
     }
 }

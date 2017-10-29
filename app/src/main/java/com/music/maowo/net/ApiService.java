@@ -1,5 +1,6 @@
 package com.music.maowo.net;
 
+import com.music.maowo.bean.CategoryResponse;
 import com.music.maowo.bean.SetListResponse;
 import com.music.maowo.net.response.ArticleDetailResponse;
 import com.music.maowo.net.response.HomePageResponse;
@@ -60,5 +61,15 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("set_article_list")
-    Observable<SetListResponse> getSetArticleList(@Field("set_id") int set_id);;
+    Observable<SetListResponse> getSetArticleList(@Field("set_id") int set_id);
+
+    @POST("user_cate_list")
+    Observable<CategoryResponse> getCategoryListInfo();
+
+    @POST("hotfile")
+    Observable<SetListResponse> getHotFile();
+
+    @POST("newestfile")
+    Observable<SetListResponse> getNewstFile();
+
 }

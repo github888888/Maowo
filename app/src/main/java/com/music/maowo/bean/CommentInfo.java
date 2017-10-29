@@ -5,15 +5,15 @@ package com.music.maowo.bean;
  */
 
 public class CommentInfo {
-    public String authorUrl;
-    public String authorName;
+    public String avatar;
+    public String nickname;
     public String postTime;
-    public String postContent;
+    public String comment_body;
 
-    public CommentInfo(String authorUrl, String authorName, String postTime, String postContent) {
-        this.authorUrl = authorUrl;
-        this.authorName = authorName;
+    public CommentInfo(String avatar, String nickname, String postTime, String comment_body) {
+        this.avatar = avatar;
+        this.nickname = nickname;
         this.postTime = postTime;
-        this.postContent = postContent;
+        this.comment_body = comment_body;
     }
 }

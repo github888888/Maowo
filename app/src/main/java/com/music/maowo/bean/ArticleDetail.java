@@ -1,8 +1,10 @@
 package com.music.maowo.bean;
 
+import java.util.List;
+
 /**
  * 文章详情
- *
+ * <p>
  * Created by zhoushaopei on 2017/10/22.
  */
 
@@ -12,7 +14,7 @@ public class ArticleDetail {
     private String avatar;
     private String title;
     private String nickname;
-
+    private List<CommentInfo> comment;
 
     public String getImage_url() {
         return image_url;
@@ -55,4 +57,11 @@ public class ArticleDetail {
         this.title = title;
     }
 
+    public List<CommentInfo> getComment() {
+        return comment;
+    }
+
+    public void setComment(List<CommentInfo> comment) {
+        this.comment = comment;
+    }
 }

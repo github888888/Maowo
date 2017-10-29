@@ -70,6 +70,7 @@ public class HomePageResponse {
 
             private String picture;
             private int id;
+            private int set_id;
             private String titile;
             private String description;
 
@@ -103,6 +104,14 @@ public class HomePageResponse {
 
             public void setId(int id) {
                 this.id = id;
+            }
+
+            public int getSet_id() {
+                return set_id;
+            }
+
+            public void setSet_id(int set_id) {
+                this.set_id = set_id;
             }
         }
 
