@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.music.maowo.Constants;
 import com.music.maowo.R;
 import com.music.maowo.activity.JoinTopicActivity;
 import com.music.maowo.activity.MyCollectionListActivity;
@@ -25,10 +26,19 @@ import com.music.maowo.activity.SubmitArticleActivity;
 import com.music.maowo.activity.SystemMessageListActivity;
 import com.music.maowo.activity.mine.SettingActivity;
 import com.music.maowo.activity.mine.UserInfoActivity;
+import com.music.maowo.bean.UserInfo;
+import com.music.maowo.net.BaseResult;
+import com.music.maowo.net.ObserverWapper;
+import com.music.maowo.net.RetrofitManager;
+import com.music.maowo.net.response.LoginAndRegisterResponse;
+import com.music.maowo.net.response.UserInfoResponse;
 import com.music.maowo.view.CircleImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Jay on 2015/8/28 0028.
@@ -57,6 +67,8 @@ public class MineFragment4 extends Fragment implements View.OnClickListener {
     @BindView(R.id.tv_mine_system_message)
     TextView tv_mine_system_message;
 
+    UserInfo info;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mine,container,false);
@@ -84,6 +96,12 @@ public class MineFragment4 extends Fragment implements View.OnClickListener {
             }
         });
         tv_user_name.setText("小龙哥");
+
+        Observable<UserInfoResponse> observable =
+                RetrofitManager.getServices().getUserInfo(Constants.access_token);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(wapper);
     }
 
     @Override
@@ -93,11 +111,9 @@ public class MineFragment4 extends Fragment implements View.OnClickListener {
             intent = new Intent(getActivity(), SettingActivity.class);
             startActivity(intent);
         } else if (view == tv_user_edit) {
-            intent = new Intent(getActivity(), UserInfoActivity.class);
-            startActivity(intent);
+            UserInfoActivity.actionInstance(getActivity(), info);
         } else if (view == tv_submit_article) {
-            intent = new Intent(getActivity(), SubmitArticleActivity.class);
-            getActivity().startActivity(intent);
+            SubmitArticleActivity.actionInstance(getActivity());
         } else if (view == tv_publish_topic) {
             intent = new Intent(getActivity(), PublishTopicActivity.class);
             getActivity().startActivity(intent);
@@ -118,4 +134,39 @@ public class MineFragment4 extends Fragment implements View.OnClickListener {
             getActivity().startActivity(intent);
         }
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        if (!isVisibleToUser) {
+            Observable<UserInfoResponse> observable =
+                    RetrofitManager.getServices().getUserInfo(Constants.access_token);
+            observable.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(wapper);
+        }
+    }
+
+    ObserverWapper wapper = new ObserverWapper<UserInfoResponse>() {
+        @Override
+        public void onCompleted() {
+            super.onCompleted();
+        }
+
+        @Override
+        public void onNext(UserInfoResponse response) {
+            if(response == null || response.getInfo() == null || response.getReasult() != 1) return;
+            info = response.getInfo();
+
+            tv_user_name.setText(info.getNickname());
+            Glide.with(getContext())
+                    .load("http://image.tianjimedia.com/uploadImages/2013/235/56Y682R36Y6X.jpg")
+                    .error(R.mipmap.avator_img)
+                    .into(civ_header);
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+        }
+    };
 }

@@ -16,8 +16,10 @@ import android.widget.ImageButton;
 
 import com.music.maowo.Constants;
 import com.music.maowo.MyApplication;
+import com.music.maowo.PreferenceConfig;
 import com.music.maowo.R;
 import com.music.maowo.Utils.Logger;
+import com.music.maowo.Utils.SharedPreferencesUtils;
 import com.music.maowo.activity.BaseActivity;
 import com.music.maowo.anno.Layout;
 import com.music.maowo.net.BaseResult;
@@ -190,6 +192,7 @@ public class LoginActivity extends BaseActivity {
             Constants.access_token = loginAndRegisterResponseBaseResult.data.token;
             MyApplication.toast(LoginActivity.this, result == 1 ? "登录成功":"登录失败");
             if (result == 1) {
+                SharedPreferencesUtils.setIsLogin(LoginActivity.this, PreferenceConfig.LOGIN, result == 1 ? true : false);
                 Intent intent = new Intent(LoginActivity.this, NicknameActivity.class);
                 startActivity(intent);
                 finish();

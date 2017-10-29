@@ -1,6 +1,8 @@
 package com.music.maowo.activity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -9,16 +11,26 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.music.maowo.Constants;
 import com.music.maowo.R;
 import com.music.maowo.anno.Layout;
+import com.music.maowo.net.ObserverWapper;
+import com.music.maowo.net.RetrofitManager;
+import com.music.maowo.net.response.SubmitArticleResponse;
+import com.music.maowo.net.response.UserInfoResponse;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 2017-10-17 0017.
@@ -34,25 +46,41 @@ public class SubmitArticleActivity extends BaseActivity {
     ListView lv_content;
 
     private SubmitArticleAdapter adapter;
-    private List<SubmitArticleInfo> list;
+//    private List<SubmitArticleInfo> list;
     // test
     private List<String> images;
+
+
+    public static void actionInstance(FragmentActivity activity) {
+        Intent intent = new Intent();
+        intent.setClass(activity, SubmitArticleActivity.class);
+        activity.startActivity(intent);
+    }
+
     @Override
     protected void initDataAndListener() {
         tv_title.setText("提交的文章");
         images = Arrays.asList(getResources().getStringArray(R.array.urls));
-        list = new ArrayList<>();
-        list.add(new SubmitArticleInfo(1, "title1", "content1", "2017-09-08", true));
-        list.add(new SubmitArticleInfo(2, "title2", "content1", "2017-09-07", false));
-        list.add(new SubmitArticleInfo(3, "title3", "content1", "2017-07-08", true));
-        adapter = new SubmitArticleAdapter();
+//        list = new ArrayList<>();
+//        list.add(new SubmitArticleInfo(1, "title1", "content1", "2017-09-08", true));
+//        list.add(new SubmitArticleInfo(2, "title2", "content1", "2017-09-07", false));
+//        list.add(new SubmitArticleInfo(3, "title3", "content1", "2017-07-08", true));
+        adapter = new SubmitArticleAdapter(null);
         lv_content.setAdapter(adapter);
         lv_content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                gotoArticleDetailActivity(list.get(i));
+//                gotoArticleDetailActivity(adapter.getItem(i));
             }
         });
+
+        Observable<SubmitArticleResponse> observable =
+                RetrofitManager.getServices().getArticleSubmit(Constants.access_token);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(wapper);
+
+//        String str = RetrofitManager.getServices().articleSubmit(Constants.access_token);
     }
 
     private void gotoArticleDetailActivity(SubmitArticleInfo submitArticleInfo) {
@@ -68,15 +96,42 @@ public class SubmitArticleActivity extends BaseActivity {
         }
     }
 
-    private class SubmitArticleAdapter extends BaseAdapter {
-
+    ObserverWapper wapper = new ObserverWapper<SubmitArticleResponse>() {
         @Override
-        public int getCount() {
-            return null == list ? 0 : list.size();
+        public void onCompleted() {
+            super.onCompleted();
         }
 
         @Override
-        public SubmitArticleInfo getItem(int i) {
+        public void onNext(SubmitArticleResponse response) {
+            if(response == null || response.getData() == null || response.getReasult() != 1) return;
+            SubmitArticleResponse.ArticleInfo info = response.getData();
+            List<SubmitArticleResponse.ArticleInfo.Articles> articles = info.getArticle();
+            adapter.notifyDataChanges(articles);
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            super.onError(e);
+        }
+    };
+
+    private class SubmitArticleAdapter extends BaseAdapter {
+
+        private List<SubmitArticleResponse.ArticleInfo.Articles> list;
+
+        SubmitArticleAdapter(List<SubmitArticleResponse.ArticleInfo.Articles> articles) {
+            if (articles == null) articles = new ArrayList<SubmitArticleResponse.ArticleInfo.Articles>();
+            this.list = articles;
+        }
+
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+
+        @Override
+        public SubmitArticleResponse.ArticleInfo.Articles getItem(int i) {
             return list.get(i);
         }
 
@@ -99,8 +154,13 @@ public class SubmitArticleActivity extends BaseActivity {
             } else {
                 viewholder = (Viewholder) view.getTag();
             }
-            SubmitArticleInfo info = getItem(i);
-            switch (info.type) {
+            SubmitArticleResponse.ArticleInfo.Articles info = getItem(i);
+
+            Random random = new Random();
+            int type = random.nextInt(3)%(3-1+1) + 1;
+
+            boolean isPass = info.getArt_state().equals("1");
+            switch (type) {
                 case 1:
                     viewholder.tv_submit_type.setText("校园");
                     viewholder.tv_submit_type.setBackgroundResource(R.drawable.submit_article_type1_shape);
@@ -114,10 +174,16 @@ public class SubmitArticleActivity extends BaseActivity {
                     viewholder.tv_submit_type.setBackgroundResource(R.drawable.submit_article_type3_shape);
                     break;
             }
-            viewholder.tv_submit_title.setText(info.title);
-            viewholder.tv_submit_pass_description.setText(info.isPass ? "已通过" : "未通过");
-            viewholder.tv_submit_time.setText("提交时间： " + info.submitTime);
+            viewholder.tv_submit_title.setText(info.getArt_titile());
+            viewholder.tv_submit_pass_description.setText(isPass ? "已通过" : "未通过");
+//            viewholder.tv_submit_time.setText("提交时间： " + info.submitTime);
             return view;
+        }
+
+        private void notifyDataChanges(List<SubmitArticleResponse.ArticleInfo.Articles> articles) {
+            if (articles == null) articles = new ArrayList<SubmitArticleResponse.ArticleInfo.Articles>();
+            this.list = articles;
+            notifyDataSetChanged();
         }
     }
 

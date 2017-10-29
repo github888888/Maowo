@@ -52,7 +52,7 @@
             android:textSize="@dimen/text_16_dm"
             android:text="@string/mine_user_info_avatar"/>
 
-        <ImageView
+        <com.music.maowo.view.CircleImageView
             android:id="@+id/avatar_img"
             android:layout_width="40dp"
             android:layout_height="40dp"

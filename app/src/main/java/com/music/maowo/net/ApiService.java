@@ -5,6 +5,7 @@ import com.music.maowo.net.response.ArticleDetailResponse;
 import com.music.maowo.net.response.HomePageResponse;
 import com.music.maowo.net.response.LoginAndRegisterResponse;
 import com.music.maowo.net.response.SubmitArticleResponse;
+import com.music.maowo.net.response.UserInfoResponse;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -61,4 +62,24 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("set_article_list")
     Observable<SetListResponse> getSetArticleList(@Field("set_id") int set_id);;
+
+    //提交个人信息
+    @FormUrlEncoded
+    @POST("submit_my_information")
+    Observable<BaseResult> submitUserInfo(@Field("avater") String avatar, @Field("gender") String gender
+            , @Field("nickname") String nickName, @Field("age") String age, @Field("token") int token);
+
+    //获取个人信息
+    @FormUrlEncoded
+    @POST("view_my_information")
+    Observable<UserInfoResponse> getUserInfo(@Field("token") int token);
+
+    //获取提交的文章
+    @FormUrlEncoded
+    @POST("get_article_submit")
+    Observable<SubmitArticleResponse> getArticleSubmit(@Field("token") int token);
+
+    @FormUrlEncoded
+    @POST("get_article_submit")
+    String articleSubmit(@Field("token") int token);
 }
