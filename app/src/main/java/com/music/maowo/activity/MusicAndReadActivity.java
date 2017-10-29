@@ -342,7 +342,7 @@ public class MusicAndReadActivity extends BaseActivity implements OnPlayerEventL
                 sendCommentMessage(et_content.getText().toString());
             }
         } else if (v == iv_add_article) {
-            Intent intent = new Intent(this, AddArticleActivity.class);
+            intent = new Intent(this, AddArticleActivity.class);
             startActivity(intent);
         }
     }

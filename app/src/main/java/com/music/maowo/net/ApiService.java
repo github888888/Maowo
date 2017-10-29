@@ -1,10 +1,12 @@
 package com.music.maowo.net;
 
+import com.music.maowo.bean.CategoryResponse;
 import com.music.maowo.bean.SetListResponse;
 import com.music.maowo.net.response.ArticleDetailResponse;
 import com.music.maowo.net.response.HomePageResponse;
 import com.music.maowo.net.response.LoginAndRegisterResponse;
 import com.music.maowo.net.response.SubmitArticleResponse;
+import com.music.maowo.net.response.UserInfoResponse;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -70,8 +72,6 @@ public interface ApiService {
 
     @POST("newestfile")
     Observable<SetListResponse> getNewstFile();
-
-    Observable<SetListResponse> getSetArticleList(@Field("set_id") int set_id);;
 
     //提交个人信息
     @FormUrlEncoded
