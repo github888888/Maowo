@@ -1,17 +1,23 @@
 package com.music.maowo.activity.mine;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -41,12 +47,21 @@ import com.music.maowo.net.response.UserInfoResponse;
 import com.music.maowo.view.CircleImageView;
 import com.music.maowo.view.PersonChooseImgDialog;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -72,10 +87,14 @@ public class UserInfoActivity extends BaseActivity implements PersonChooseImgDia
     CircleImageView mAvatarImg;
 
     String gender = "";
-    private File photoFile;
     private PersonChooseImgDialog chooseHead;
-    static final int REQUESTCODE_PICK = 0; //从相册选取图片
-    static final int REQUESTCODE_CUTTING = 2;// 裁剪图片
+    public static final int NONE = 0;
+    public static final int PHOTOHRAPH = 1;// 拍照
+    public static final int PHOTOZOOM = 2; // 缩放
+    public static final int PHOTORESOULT = 3;// 结果
+    public static final String IMAGE_UNSPECIFIED = "image/*";
+    String filePath;
+
 
     public static void actionInstance(Activity activity, UserInfo info) {
         Intent intent = new Intent();
@@ -154,10 +173,10 @@ public class UserInfoActivity extends BaseActivity implements PersonChooseImgDia
         mManBtn.setSelected(gender.equals("男") ? true : false);
         mManBtn.setSelected(gender.equals("男") ? false : true);
         gender = gender.equals("男") ? "男" : "女";
-                Glide.with(UserInfoActivity.this)
-                .load("http://image.tianjimedia.com/uploadImages/2013/235/56Y682R36Y6X.jpg")
-                .error(R.mipmap.avator_img)
-                .into(mAvatarImg);
+//        Glide.with(UserInfoActivity.this)
+//        .load("http://image.tianjimedia.com/uploadImages/2013/235/56Y682R36Y6X.jpg")
+//        .error(R.mipmap.avator_img)
+//        .into(mAvatarImg);
 
     }
 
@@ -192,101 +211,219 @@ public class UserInfoActivity extends BaseActivity implements PersonChooseImgDia
     };
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, final Intent data) {
-        if (data == null) return;
-        switch (requestCode) {
-            case REQUESTCODE_PICK:
-                try {
-                    startPhotoZoom(data.getData());
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
-                }
-
-                break;
-            case REQUESTCODE_CUTTING:
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            setPicToView(data);
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, 500);
-                break;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    /**
-     * 裁剪图片
-     *
-     * @param uri
-     */
-    public void startPhotoZoom(Uri uri) {
-        int px = DevicesUtils.dip2px(this, 90);
-        this.photoFile = FileUtils.createAvatarEmptyFile();
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setDataAndType(uri, "image/*");
-        intent.putExtra("crop", true);
-        intent.putExtra("aspectX", 1);//宽高的比例
-        intent.putExtra("aspectY", 1);
-        intent.putExtra("outputX", px);//裁剪的图片的宽高
-        intent.putExtra("outputY", px);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-        intent.putExtra("return-data", false);
-        startActivityForResult(intent, REQUESTCODE_CUTTING);
-
-        //此处注释掉的部分是针对android 4.4路径修改的一个测试
-        //有兴趣的读者可以自己调试看看
-    }
-
-    /**
-     * 设置修剪好的图片
-     *
-     * @param picdata
-     */
-    private void setPicToView(Intent picdata) throws FileNotFoundException {
-        Logger.i("setPicToView +++++++++1");
-        Bundle extras = picdata.getExtras();
-        Bitmap photo = null;
-        if (extras != null && extras.getParcelable("data") != null) {
-            photo = extras.getParcelable("data");
-        } else if (picdata.getData() != null) {
-            Uri data = picdata.getData();
-            InputStream inputStream = this.getContentResolver().openInputStream(data);
-            photo = BitmapFactory.decodeStream(inputStream);
-        } else if (photoFile != null && photoFile.exists()) {
-            Logger.i("setPicToView +++++++++2");
-            photo = FileUtils.decodeFileBitmap(photoFile);
-        }
-        if (photo == null) return;
-        final Drawable drawable = new BitmapDrawable(null, photo);
-        final Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-        final Bitmap bitmapSmall = FileUtils.compressImage(bitmap, 20, 700);//kb
-        File cropPhoto = FileUtils.saveAvatarBitmap(bitmapSmall);
-        uploadAvatar(cropPhoto, bitmapSmall);
-    }
-
-
-    private void uploadAvatar(File cropPhoto, Bitmap bitmapSmall) {
-        MyApplication.toast(this, "1111");
-        mAvatarImg.setImageBitmap(bitmapSmall);
-    }
-
-
-    @Override
     public void chooseImg() {
         chooseHead.dismiss();
-        Intent pickIntent = new Intent(Intent.ACTION_PICK, null);
-        pickIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-        startActivityForResult(pickIntent, REQUESTCODE_PICK);
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_PICK);
+        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, PHOTOZOOM);
     }
 
     @Override
     public void takePhoto() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//      intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "testcapture.jpg")));
+        Logger.i("=============" + Environment.getExternalStorageDirectory());
+        startActivityForResult(intent, PHOTOHRAPH);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        ContentResolver resolver = this.getContentResolver();
+
+        if (resultCode == NONE||data == null)
+            return;
+
+        // 拍照
+        if (requestCode == PHOTOHRAPH) {
+            // 设置文件保存路径这里放在跟目录下
+            File picture = new File(Environment.getExternalStorageDirectory()
+                    + "/testcapture.jpg");
+            Logger.i("------------------------" + picture.getPath());
+            startPhotoZoom(Uri.fromFile(picture));
+        }
+        // 读取相册缩放图片
+        if (requestCode == PHOTOZOOM) {
+            try {
+                // 获得图片的uri
+                Uri originalUri = data.getData();
+                startPhotoZoom(originalUri);
+                // 将图片内容解析成字节数组
+//                byte[] mContent = readStream(resolver.openInputStream(Uri
+//                        .parse(originalUri.toString())));
+//                // 将字节数组转换为BitmapDrawable对象
+//                Bitmap myBitmap = getPicFromBytes(mContent, null);
+//                BitmapDrawable bd = new BitmapDrawable(myBitmap);
+//                //按比例缩放图片
+//              Drawable d = zoomDrawable(bd, 100, 100, true);
+//                //不按比例缩放图片，指定大小
+////                Drawable d = zoomDrawable(bd, 100, 100, false);
+//                // //把得到的图片绑定在控件上显示
+////                mAvatarImg.setImageDrawable(d);
+
+            } catch (Exception e) {
+                Logger.i("相册异常" + e.getMessage());
+            }
+        }
+        // 处理结果
+        if (requestCode == PHOTORESOULT) {
+            Bundle extras = data.getExtras();
+            if (extras != null) {
+                Bitmap photo = extras.getParcelable("data");
+                filePath = FileUtils.saveFile(this, "photo.jpg", photo);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+                photo.compress(Bitmap.CompressFormat.JPEG, 75, stream);// (0 - // 100)压缩文件
+                mAvatarImg.setImageBitmap(photo);
+
+            }
+
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void startPhotoZoom(Uri uri) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, IMAGE_UNSPECIFIED);
+        intent.putExtra("crop", "true");
+        // aspectX aspectY 是宽高的比例
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        // outputX outputY 是裁剪图片宽高
+        intent.putExtra("outputX", 64);
+        intent.putExtra("outputY", 64);
+        intent.putExtra("return-data", true);
+        startActivityForResult(intent, PHOTORESOULT);
+    }
+    private Drawable zoomDrawable(Drawable drawable, int w, int h, Boolean scale) {
+        int width = drawable.getIntrinsicWidth();
+        int height = drawable.getIntrinsicHeight();
+        Bitmap oldbmp = drawableToBitmap(drawable);
+        Matrix matrix = new Matrix();
+        float scaleWidth;
+        float scaleHeight;
+        if (scale == true) {
+            // 如果要保持宽高比，那说明高度跟宽度的缩放比例都是相同的
+            scaleWidth = ((float) w / width);
+            scaleHeight = ((float) w / width);
+        } else {
+            // 如果不保持缩放比，那就根据指定的宽高度进行缩放
+            scaleWidth = ((float) w / width);
+            scaleHeight = ((float) h / height);
+        }
+        matrix.postScale(scaleWidth, scaleHeight);
+        Bitmap newbmp = Bitmap.createBitmap(oldbmp, 0, 0, width, height,
+                matrix, true);
+        return new BitmapDrawable(null, newbmp);
+    }
+
+    private Bitmap drawableToBitmap(Drawable drawable) {
+        Bitmap bitmap = null;
+        try {
+            int width = drawable.getIntrinsicWidth();
+            int height = drawable.getIntrinsicHeight();
+            Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
+                    : Bitmap.Config.RGB_565;
+            bitmap = Bitmap.createBitmap(width, height, config);
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, width, height);
+            drawable.draw(canvas);
+        } catch (Exception e) {
+            // TODO: handle exception
+            Logger.i("error:"+e.getMessage());
+        }
+
+        return bitmap;
+    }
+
+    public static byte[] readStream(InputStream inStream) throws Exception {
+        byte[] buffer = new byte[1024];
+        int len = -1;
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        while ((len = inStream.read(buffer)) != -1) {
+            outStream.write(buffer, 0, len);
+        }
+        byte[] data = outStream.toByteArray();
+        outStream.close();
+        inStream.close();
+        return data;
 
     }
+
+    public static Bitmap getPicFromBytes(byte[] bytes, BitmapFactory.Options opts) {
+        if (bytes != null)
+            if (opts != null)
+                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length,
+                        opts);
+            else
+                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        return null;
+    }
+
+    /**
+     * bitmap转为base64
+     * @param bitmap
+     * @return
+     */
+    public static String bitmapToBase64(Bitmap bitmap) {
+
+        String result = null;
+        ByteArrayOutputStream baos = null;
+        try {
+            if (bitmap != null) {
+                baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+
+                baos.flush();
+                baos.close();
+
+                byte[] bitmapBytes = baos.toByteArray();
+                result = Base64.encodeToString(bitmapBytes, Base64.DEFAULT);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (baos != null) {
+                    baos.flush();
+                    baos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    /**
+     * base64转为bitmap
+     * @param base64Data
+     * @return
+     */
+    public static Bitmap base64ToBitmap(String base64Data) {
+        byte[] bytes = Base64.decode(base64Data, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+
+    private void uploadFile(File file) {
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("picture", file.getName(), requestFile);
+        String descriptionString = "hello, this is description speaking";
+        RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), descriptionString);
+        Call<ResponseBody> call = RetrofitManager.getServices().uploadAvatar(description, body);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call,
+                                   Response<ResponseBody> response) {
+                Logger.i("Upload", "success");
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Logger.e("Upload error:", t.getMessage());
+            }
+        });
+
+    }
+
 }

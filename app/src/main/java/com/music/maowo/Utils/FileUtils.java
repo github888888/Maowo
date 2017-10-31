@@ -19,6 +19,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -283,5 +285,57 @@ public class FileUtils {
         }
         Logger.d("saveAvatarBitmap:" + f.getPath());
         return f;
+    }
+
+
+
+
+
+
+    public static String saveFile(Context c, String fileName, Bitmap bitmap) {
+        return saveFile(c, "", fileName, bitmap);
+    }
+
+    public static String saveFile(Context c, String filePath, String fileName, Bitmap bitmap) {
+        byte[] bytes = bitmapToBytes(bitmap);
+        return saveFile(c, filePath, fileName, bytes);
+    }
+
+    public static byte[] bitmapToBytes(Bitmap bm) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        return baos.toByteArray();
+    }
+
+    public static String saveFile(Context c, String filePath, String fileName, byte[] bytes) {
+        String fileFullName = "";
+        FileOutputStream fos = null;
+        String dateFolder = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA)
+                .format(new Date());
+        try {
+            String suffix = "";
+            if (filePath == null || filePath.trim().length() == 0) {
+                filePath = Environment.getExternalStorageDirectory() + "/XiaoCao/" + dateFolder + "/";
+            }
+            File file = new File(filePath);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            File fullFile = new File(filePath, fileName + suffix);
+            fileFullName = fullFile.getPath();
+            fos = new FileOutputStream(new File(filePath, fileName + suffix));
+            fos.write(bytes);
+        } catch (Exception e) {
+            fileFullName = "";
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    fileFullName = "";
+                }
+            }
+        }
+        return fileFullName;
     }
 }
